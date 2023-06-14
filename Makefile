@@ -123,6 +123,60 @@ MovieRecommendatoinSystem/fast:
 	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/build
 .PHONY : MovieRecommendatoinSystem/fast
 
+authUI.o: authUI.cpp.o
+
+.PHONY : authUI.o
+
+# target to build an object file
+authUI.cpp.o:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.o
+.PHONY : authUI.cpp.o
+
+authUI.i: authUI.cpp.i
+
+.PHONY : authUI.i
+
+# target to preprocess a source file
+authUI.cpp.i:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.i
+.PHONY : authUI.cpp.i
+
+authUI.s: authUI.cpp.s
+
+.PHONY : authUI.s
+
+# target to generate assembly for a file
+authUI.cpp.s:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.s
+.PHONY : authUI.cpp.s
+
+db.o: db.cpp.o
+
+.PHONY : db.o
+
+# target to build an object file
+db.cpp.o:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.o
+.PHONY : db.cpp.o
+
+db.i: db.cpp.i
+
+.PHONY : db.i
+
+# target to preprocess a source file
+db.cpp.i:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.i
+.PHONY : db.cpp.i
+
+db.s: db.cpp.s
+
+.PHONY : db.s
+
+# target to generate assembly for a file
+db.cpp.s:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.s
+.PHONY : db.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +213,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... MovieRecommendatoinSystem"
+	@echo "... authUI.o"
+	@echo "... authUI.i"
+	@echo "... authUI.s"
+	@echo "... db.o"
+	@echo "... db.i"
+	@echo "... db.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

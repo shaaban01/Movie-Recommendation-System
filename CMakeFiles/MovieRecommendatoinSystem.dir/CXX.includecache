@@ -6,17 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/chaaban/Projects/cpp_projects/cmake_practice/main.cpp
-mysql_driver.h
+/home/chaaban/Projects/cpp_projects/cmake_practice/authUI.cpp
+iostream
 -
-mysql_connection.h
+string
 -
-cppconn/driver.h
--
-cppconn/exception.h
--
-cppconn/resultset.h
--
-cppconn/statement.h
+db.h
+/home/chaaban/Projects/cpp_projects/cmake_practice/db.h
+
+/home/chaaban/Projects/cpp_projects/cmake_practice/db.h
+string
 -
 

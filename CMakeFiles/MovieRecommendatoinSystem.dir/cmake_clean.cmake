@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.o"
+  "CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.o"
   "CMakeFiles/MovieRecommendatoinSystem.dir/main.cpp.o"
   "MovieRecommendatoinSystem"
   "MovieRecommendatoinSystem.pdb"
