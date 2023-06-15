@@ -1,0 +1,3 @@
+/home/chaaban/Projects/cpp_projects/cmake_practice/build/CMakeFiles/rebuild_cache.dir
+/home/chaaban/Projects/cpp_projects/cmake_practice/build/CMakeFiles/edit_cache.dir
+/home/chaaban/Projects/cpp_projects/cmake_practice/build/CMakeFiles/MovieRecommendatoinSystem.dir
