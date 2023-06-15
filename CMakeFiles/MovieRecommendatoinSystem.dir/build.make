@@ -70,22 +70,48 @@ CMakeFiles/MovieRecommendatoinSystem.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MovieRecommendatoinSystem.dir/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/chaaban/Projects/cpp_projects/cmake_practice/main.cpp -o CMakeFiles/MovieRecommendatoinSystem.dir/main.cpp.s
 
-CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.o: CMakeFiles/MovieRecommendatoinSystem.dir/flags.make
-CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.o: ../authUI.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/chaaban/Projects/cpp_projects/cmake_practice/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.o -c /home/chaaban/Projects/cpp_projects/cmake_practice/authUI.cpp
+CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.o: CMakeFiles/MovieRecommendatoinSystem.dir/flags.make
+CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.o: ../movieFetch.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/chaaban/Projects/cpp_projects/cmake_practice/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.o -c /home/chaaban/Projects/cpp_projects/cmake_practice/movieFetch.cpp
 
-CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/chaaban/Projects/cpp_projects/cmake_practice/authUI.cpp > CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.i
+CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/chaaban/Projects/cpp_projects/cmake_practice/movieFetch.cpp > CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.i
 
-CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/chaaban/Projects/cpp_projects/cmake_practice/authUI.cpp -o CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.s
+CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/chaaban/Projects/cpp_projects/cmake_practice/movieFetch.cpp -o CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.s
+
+CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.o: CMakeFiles/MovieRecommendatoinSystem.dir/flags.make
+CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.o: ../movie.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/chaaban/Projects/cpp_projects/cmake_practice/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.o -c /home/chaaban/Projects/cpp_projects/cmake_practice/movie.cpp
+
+CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/chaaban/Projects/cpp_projects/cmake_practice/movie.cpp > CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.i
+
+CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/chaaban/Projects/cpp_projects/cmake_practice/movie.cpp -o CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.s
+
+CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.o: CMakeFiles/MovieRecommendatoinSystem.dir/flags.make
+CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.o: ../viewMovies.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/chaaban/Projects/cpp_projects/cmake_practice/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.o -c /home/chaaban/Projects/cpp_projects/cmake_practice/viewMovies.cpp
+
+CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/chaaban/Projects/cpp_projects/cmake_practice/viewMovies.cpp > CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.i
+
+CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/chaaban/Projects/cpp_projects/cmake_practice/viewMovies.cpp -o CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.s
 
 CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.o: CMakeFiles/MovieRecommendatoinSystem.dir/flags.make
 CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.o: ../db.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/chaaban/Projects/cpp_projects/cmake_practice/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/chaaban/Projects/cpp_projects/cmake_practice/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.o -c /home/chaaban/Projects/cpp_projects/cmake_practice/db.cpp
 
 CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.i: cmake_force
@@ -99,18 +125,23 @@ CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.s: cmake_force
 # Object files for target MovieRecommendatoinSystem
 MovieRecommendatoinSystem_OBJECTS = \
 "CMakeFiles/MovieRecommendatoinSystem.dir/main.cpp.o" \
-"CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.o" \
+"CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.o" \
+"CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.o" \
+"CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.o" \
 "CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.o"
 
 # External object files for target MovieRecommendatoinSystem
 MovieRecommendatoinSystem_EXTERNAL_OBJECTS =
 
 MovieRecommendatoinSystem: CMakeFiles/MovieRecommendatoinSystem.dir/main.cpp.o
-MovieRecommendatoinSystem: CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.o
+MovieRecommendatoinSystem: CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.o
+MovieRecommendatoinSystem: CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.o
+MovieRecommendatoinSystem: CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.o
 MovieRecommendatoinSystem: CMakeFiles/MovieRecommendatoinSystem.dir/db.cpp.o
 MovieRecommendatoinSystem: CMakeFiles/MovieRecommendatoinSystem.dir/build.make
+MovieRecommendatoinSystem: /usr/lib/x86_64-linux-gnu/libcurl.so
 MovieRecommendatoinSystem: CMakeFiles/MovieRecommendatoinSystem.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/chaaban/Projects/cpp_projects/cmake_practice/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable MovieRecommendatoinSystem"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/chaaban/Projects/cpp_projects/cmake_practice/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable MovieRecommendatoinSystem"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MovieRecommendatoinSystem.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

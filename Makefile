@@ -123,33 +123,6 @@ MovieRecommendatoinSystem/fast:
 	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/build
 .PHONY : MovieRecommendatoinSystem/fast
 
-authUI.o: authUI.cpp.o
-
-.PHONY : authUI.o
-
-# target to build an object file
-authUI.cpp.o:
-	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.o
-.PHONY : authUI.cpp.o
-
-authUI.i: authUI.cpp.i
-
-.PHONY : authUI.i
-
-# target to preprocess a source file
-authUI.cpp.i:
-	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.i
-.PHONY : authUI.cpp.i
-
-authUI.s: authUI.cpp.s
-
-.PHONY : authUI.s
-
-# target to generate assembly for a file
-authUI.cpp.s:
-	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/authUI.cpp.s
-.PHONY : authUI.cpp.s
-
 db.o: db.cpp.o
 
 .PHONY : db.o
@@ -204,6 +177,87 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+movie.o: movie.cpp.o
+
+.PHONY : movie.o
+
+# target to build an object file
+movie.cpp.o:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.o
+.PHONY : movie.cpp.o
+
+movie.i: movie.cpp.i
+
+.PHONY : movie.i
+
+# target to preprocess a source file
+movie.cpp.i:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.i
+.PHONY : movie.cpp.i
+
+movie.s: movie.cpp.s
+
+.PHONY : movie.s
+
+# target to generate assembly for a file
+movie.cpp.s:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/movie.cpp.s
+.PHONY : movie.cpp.s
+
+movieFetch.o: movieFetch.cpp.o
+
+.PHONY : movieFetch.o
+
+# target to build an object file
+movieFetch.cpp.o:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.o
+.PHONY : movieFetch.cpp.o
+
+movieFetch.i: movieFetch.cpp.i
+
+.PHONY : movieFetch.i
+
+# target to preprocess a source file
+movieFetch.cpp.i:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.i
+.PHONY : movieFetch.cpp.i
+
+movieFetch.s: movieFetch.cpp.s
+
+.PHONY : movieFetch.s
+
+# target to generate assembly for a file
+movieFetch.cpp.s:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/movieFetch.cpp.s
+.PHONY : movieFetch.cpp.s
+
+viewMovies.o: viewMovies.cpp.o
+
+.PHONY : viewMovies.o
+
+# target to build an object file
+viewMovies.cpp.o:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.o
+.PHONY : viewMovies.cpp.o
+
+viewMovies.i: viewMovies.cpp.i
+
+.PHONY : viewMovies.i
+
+# target to preprocess a source file
+viewMovies.cpp.i:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.i
+.PHONY : viewMovies.cpp.i
+
+viewMovies.s: viewMovies.cpp.s
+
+.PHONY : viewMovies.s
+
+# target to generate assembly for a file
+viewMovies.cpp.s:
+	$(MAKE) -f CMakeFiles/MovieRecommendatoinSystem.dir/build.make CMakeFiles/MovieRecommendatoinSystem.dir/viewMovies.cpp.s
+.PHONY : viewMovies.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -213,15 +267,21 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... MovieRecommendatoinSystem"
-	@echo "... authUI.o"
-	@echo "... authUI.i"
-	@echo "... authUI.s"
 	@echo "... db.o"
 	@echo "... db.i"
 	@echo "... db.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... movie.o"
+	@echo "... movie.i"
+	@echo "... movie.s"
+	@echo "... movieFetch.o"
+	@echo "... movieFetch.i"
+	@echo "... movieFetch.s"
+	@echo "... viewMovies.o"
+	@echo "... viewMovies.i"
+	@echo "... viewMovies.s"
 .PHONY : help
 
 
