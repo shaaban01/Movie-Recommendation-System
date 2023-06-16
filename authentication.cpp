@@ -25,7 +25,7 @@ void CmdAuthentication::registerUser()
     cout << "Enter your password: ";
     cin >> password;
 
-    db.registerUser(firstName, lastName, email, password);
+    db.registerUser(firstName, lastName, email, password, authenicated);
 }
 
 void CmdAuthentication::loginUser()
@@ -36,31 +36,34 @@ void CmdAuthentication::loginUser()
     cin >> email;
     cout << "Enter your password: ";
     cin >> password;
-    db.loginUser(email, password);
+    db.loginUser(email, password, authenicated);
 }
 
 void CmdAuthentication::authenticate()
 {
     int choice;
-    while (true)
-    {
-        showMenu();
-        std::cin >> choice;
 
-        switch (choice)
-        {
-        case 1:
-            registerUser();
-            break;
-        case 2:
-            loginUser();
-            break;
-        case 3:
-            std::cout << "Goodbye!\n";
-            return;
-        default:
-            std::cout << "Invalid choice. Please try again.\n";
-            break;
-        }
+    showMenu();
+    std::cin >> choice;
+
+    switch (choice)
+    {
+    case 1:
+        registerUser();
+        break;
+    case 2:
+        loginUser();
+        break;
+    case 3:
+        std::cout << "Goodbye!\n";
+        return;
+    default:
+        std::cout << "Invalid choice. Please try again.\n";
+        break;
     }
+}
+
+bool CmdAuthentication::isAuthenticated()
+{
+    return authenicated;
 }

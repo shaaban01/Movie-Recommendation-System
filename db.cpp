@@ -9,7 +9,7 @@ sql::Connection *DB::getConnection()
     return con;
 }
 
-void DB::registerUser(const string &firstName, const string &lastName, const string &email, const std::string &password)
+void DB::registerUser(const string &firstName, const string &lastName, const string &email, const std::string &password, bool &isAuthenticated)
 {
     sql::Connection *con = getConnection();
 
@@ -19,6 +19,7 @@ void DB::registerUser(const string &firstName, const string &lastName, const str
         stmt->execute("INSERT INTO MRS.users (firstname, lastname, email, password) VALUES ('" + firstName + "', '" + lastName + "', '" + email + "', '" + password + "')");
         delete stmt;
         cout << "Registration successful!\n";
+        isAuthenticated = true;
     }
     catch (sql::SQLException &e)
     {
@@ -28,7 +29,7 @@ void DB::registerUser(const string &firstName, const string &lastName, const str
     delete con;
 }
 
-void DB::loginUser(const std::string &email, const std::string &password)
+void DB::loginUser(const std::string &email, const std::string &password, bool &isAuthenticated)
 {
     sql::Connection *con = getConnection();
 
@@ -43,6 +44,7 @@ void DB::loginUser(const std::string &email, const std::string &password)
             if (password == storedPassword)
             {
                 cout << "Login successful!" << endl;
+                isAuthenticated = true;
             }
             else
             {

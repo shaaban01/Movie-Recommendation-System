@@ -6,8 +6,12 @@
 int main()
 {
 
-    // Authentication *auth = new CmdAuthentication();
-    // auth->authenticate();
+    Authentication *auth = new CmdAuthentication();
+    while (!auth->isAuthenticated())
+    {
+        auth->authenticate();
+    }
+    
 
     std::string movieName = "Fight";
     std::vector<Movie> movies;
@@ -17,7 +21,7 @@ int main()
     viewer->Display();
 
 
-    // delete auth;
+    delete auth;
     delete viewer;
     return 0;
 }
