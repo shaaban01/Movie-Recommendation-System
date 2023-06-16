@@ -16,6 +16,6 @@ private:
     sql::Connection *getConnection();
 
 public:
-    void registerUser(const std::string &firstName, const std::string &lastName, const std::string &email, const std::string &password);
-    void loginUser(const std::string &email, const std::string &password);
+    void registerUser(const std::string &firstName, const std::string &lastName, const std::string &email, const std::string &password, bool &isAuthenticated);
+    void loginUser(const std::string &email, const std::string &password, bool &isAuthenticated);
 };
