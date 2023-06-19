@@ -2,10 +2,25 @@
 
 using namespace std;
 
-sql::Connection *DB::getConnection()
+DB *DB::instance = nullptr;
+
+DB::DB()
 {
     driver = sql::mysql::get_mysql_driver_instance();
     con = driver->connect("tcp://127.0.0.1:3306", "root", "2003!!2003@@");
+}
+
+DB *DB::getInstance()
+{
+    if (instance == nullptr)
+    {
+        instance = new DB();
+    }
+    return instance;
+}
+
+sql::Connection *DB::getConnection()
+{
     return con;
 }
 
@@ -25,8 +40,6 @@ void DB::registerUser(const string &firstName, const string &lastName, const str
     {
         cout << "ERROR!!\n";
     }
-
-    delete con;
 }
 
 void DB::loginUser(const std::string &email, const std::string &password, bool &isAuthenticated)
@@ -63,6 +76,4 @@ void DB::loginUser(const std::string &email, const std::string &password, bool &
     {
         cout << "ERROR!!!\n";
     }
-
-    delete con;
 }
