@@ -47,14 +47,14 @@ bool FetchMovies(std::string url, std::vector<Movie> &movies)
 
 bool FetchMoviesByTitle(std::string movieName, std::vector<Movie> &movies)
 {
-    std::string apiKey = std::getenv("API_KEY"); // Fetch the API key from the environment variables
+    std::string apiKey = std::getenv("API_KEY_TMDB"); // Fetch the API key from the environment variables
     std::string url = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + movieName + "&language=en-US&page=1";
     return FetchMovies(url, movies);
 }
 
 bool FetchPopularMovies(std::vector<Movie> &movies)
 {
-    std::string apiKey = std::getenv("API_KEY"); // Fetch the API key from the environment variables
+    std::string apiKey = std::getenv("API_KEY_TMDB"); // Fetch the API key from the environment variables
     std::string url = "https://api.themoviedb.org/3/movie/popular?api_key=" + apiKey + "&language=en-US&page=1";
     return FetchMovies(url, movies);
 }
