@@ -7,15 +7,20 @@
 #include <cppconn/statement.h>
 #include <string>
 
-class DB
-{
+class DB {
 private:
+    static DB *instance;
     sql::mysql::MySQL_Driver *driver;
     sql::Connection *con;
+
+    DB();
+    DB(const DB &) = delete;
+    DB &operator=(const DB &) = delete;
 
     sql::Connection *getConnection();
 
 public:
-    void registerUser(const std::string &firstName, const std::string &lastName, const std::string &email, const std::string &password, bool &isAuthenticated);
-    void loginUser(const std::string &email, const std::string &password, bool &isAuthenticated);
+    static DB *getInstance();
+    sql::ResultSet* executeQuery(const std::string& query);
+    int executeUpdate(const std::string& update);
 };

@@ -1,7 +1,5 @@
-#include "movieFetch.h"
+#include "movieApiController.h"
 #include "movie.h"
-
-std::string const apiKey = "2cce7924b7bbfab015d3af73e7ea9bba";
 
 size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::string *userp)
 {
@@ -9,7 +7,7 @@ size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::string *use
     return size * nmemb;
 }
 
-bool FetchMovieData(std::string movieName, std::vector<Movie> &movies)
+bool FetchMovies(std::string url, std::vector<Movie> &movies)
 {
     CURL *curl;
     CURLcode res;
@@ -20,7 +18,6 @@ bool FetchMovieData(std::string movieName, std::vector<Movie> &movies)
 
     if (curl)
     {
-        std::string url = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + movieName + "&language=en-US&page=1";
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
@@ -46,4 +43,18 @@ bool FetchMovieData(std::string movieName, std::vector<Movie> &movies)
 
     curl_global_cleanup();
     return true;
+}
+
+bool FetchMoviesByTitle(std::string movieName, std::vector<Movie> &movies)
+{
+    std::string apiKey = std::getenv("API_KEY_TMDB"); // Fetch the API key from the environment variables
+    std::string url = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + movieName + "&language=en-US&page=1";
+    return FetchMovies(url, movies);
+}
+
+bool FetchPopularMovies(std::vector<Movie> &movies)
+{
+    std::string apiKey = std::getenv("API_KEY_TMDB"); // Fetch the API key from the environment variables
+    std::string url = "https://api.themoviedb.org/3/movie/popular?api_key=" + apiKey + "&language=en-US&page=1";
+    return FetchMovies(url, movies);
 }

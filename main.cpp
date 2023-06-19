@@ -1,27 +1,22 @@
 #include <iostream>
+#include <memory>
 #include "authentication.h"
-#include "movieFetch.h"
+#include "movieApiController.h"
 #include "viewMovies.h"
 
 int main()
 {
-
-    Authentication *auth = new CmdAuthentication();
+    std::unique_ptr<Authentication> auth = std::make_unique<CmdAuthentication>();
     while (!auth->isAuthenticated())
     {
         auth->authenticate();
     }
-    
 
-    std::string movieName = "Fight";
     std::vector<Movie> movies;
-    FetchMovieData(movieName, movies);
+    FetchPopularMovies(movies);
 
-    ViewMovies *viewer = new CmdViewMovies(movies);
+    std::unique_ptr<ViewMovies> viewer = std::make_unique<CmdViewMovies>(movies);
     viewer->Display();
 
-
-    delete auth;
-    delete viewer;
     return 0;
 }

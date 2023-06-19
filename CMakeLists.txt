@@ -12,7 +12,7 @@ include_directories(${CURL_INCLUDE_DIRS})
 include_directories(/usr/include/cppconn)
 link_directories(/usr/lib)
 
-add_executable(MovieRecommendatoinSystem main.cpp movieFetch.cpp movie.cpp viewMovies.cpp db.cpp authentication.cpp)
+add_executable(MovieRecommendatoinSystem main.cpp movieApiController.cpp movie.cpp viewMovies.cpp db.cpp authentication.cpp user.cpp userController.cpp)
 
 # Link the required libraries
 target_link_libraries(MovieRecommendatoinSystem mysqlcppconn ${CURL_LIBRARIES} nlohmann_json::nlohmann_json)

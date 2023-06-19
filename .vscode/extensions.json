@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "powertech.powercpp",
-        "github.copilot"
+        "github.copilot",
+        "ms-vscode.cpptools-themes"
     ]
 }
