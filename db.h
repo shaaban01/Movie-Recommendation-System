@@ -7,8 +7,7 @@
 #include <cppconn/statement.h>
 #include <string>
 
-class DB
-{
+class DB {
 private:
     static DB *instance;
     sql::mysql::MySQL_Driver *driver;
@@ -22,7 +21,6 @@ private:
 
 public:
     static DB *getInstance();
-
-    void registerUser(const std::string &firstName, const std::string &lastName, const std::string &email, const std::string &password, bool &isAuthenticated);
-    void loginUser(const std::string &email, const std::string &password, bool &isAuthenticated);
+    sql::ResultSet* executeQuery(const std::string& query);
+    int executeUpdate(const std::string& update);
 };
