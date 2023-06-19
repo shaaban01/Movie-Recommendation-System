@@ -5,6 +5,12 @@
 
 using namespace std;
 
+CmdAuthentication::CmdAuthentication()
+{
+    userController = new UserController();
+    authenicated = false;
+}
+
 void CmdAuthentication::showMenu()
 {
     std::cout << "1. Register\n";
@@ -15,28 +21,29 @@ void CmdAuthentication::showMenu()
 
 void CmdAuthentication::registerUser()
 {
-    string firstName, lastName, email, password;
-    cout << "Enter your first name: ";
-    cin >> firstName;
-    cout << "Enter your last name: ";
-    cin >> lastName;
-    cout << "Enter your email: ";
-    cin >> email;
+    string userName, password;
+    int age;
+    cout << "Enter your userName: ";
+    cin >> userName;
     cout << "Enter your password: ";
     cin >> password;
+    cout << "Enter your age: ";
+    cin >> age;
 
-    db.registerUser(firstName, lastName, email, password, authenicated);
+    userController->registerUser(userName, password, age);
+    authenicated = userController->isAuthenticated();
 }
 
 void CmdAuthentication::loginUser()
 {
-    string email, password;
+    string username, password;
 
-    cout << "Enter your email: ";
-    cin >> email;
+    cout << "Enter your username: ";
+    cin >> username;
     cout << "Enter your password: ";
     cin >> password;
-    db.loginUser(email, password, authenicated);
+    userController->loginUser(username, password);
+    authenicated = userController->isAuthenticated();
 }
 
 void CmdAuthentication::authenticate()

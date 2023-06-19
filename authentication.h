@@ -1,5 +1,5 @@
 #include <string>
-#include "db.h"
+#include "userController.h"
 
 class Authentication
 {
@@ -10,15 +10,15 @@ protected:
 
 public:
     virtual void authenticate() = 0;
-    bool isAuthenticated(){ return authenicated;};
+    bool isAuthenticated() { return authenicated; };
 };
 
 class CmdAuthentication : public Authentication
 {
 private:
-    DB db;
-
+    UserController *userController;
 public:
+    CmdAuthentication();
     void registerUser() override;
     void loginUser() override;
     void authenticate() override;

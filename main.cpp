@@ -11,7 +11,6 @@ int main()
     {
         auth->authenticate();
     }
-    
 
     std::vector<Movie> movies;
     FetchPopularMovies(movies);
@@ -19,8 +18,8 @@ int main()
     ViewMovies *viewer = new CmdViewMovies(movies);
     viewer->Display();
 
-
     delete auth;
     delete viewer;
+
     return 0;
 }
