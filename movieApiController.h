@@ -9,6 +9,11 @@
 
 // Fetches movie data from the TMDB API and stores the data in the provided vector of Movies.
 // Returns true if the fetch was successful, false otherwise.
-bool FetchMovieData(std::string movieName, std::vector<Movie> &movies);
+bool FetchMoviesByTitle(std::string movieName, std::vector<Movie> &movies);
+
+// Fetches the popular  movies from the TMDB API and stores the data in the provided vector of Movies.
+// Returns true if the fetch was successful, false otherwise.
+bool FetchPopularMovies(std::vector<Movie> &movies);
+
 
 #endif /* MOVIE_FETCH_H */

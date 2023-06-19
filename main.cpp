@@ -1,6 +1,6 @@
 #include <iostream>
 #include "authentication.h"
-#include "movieFetch.h"
+#include "movieApiController.h"
 #include "viewMovies.h"
 
 int main()
@@ -13,9 +13,8 @@ int main()
     }
     
 
-    std::string movieName = "Fight";
     std::vector<Movie> movies;
-    FetchMovieData(movieName, movies);
+    FetchPopularMovies(movies);
 
     ViewMovies *viewer = new CmdViewMovies(movies);
     viewer->Display();
