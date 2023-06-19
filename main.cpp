@@ -6,11 +6,11 @@
 
 int main()
 {
-    // std::unique_ptr<Authentication> auth = std::make_unique<CmdAuthentication>();
-    // while (!auth->isAuthenticated())
-    // {
-    //     auth->authenticate();
-    // }
+    std::unique_ptr<Authentication> auth = std::make_unique<CmdAuthentication>();
+    while (!auth->isAuthenticated())
+    {
+        auth->authenticate();
+    }
 
     std::vector<Movie> movies;
     FetchPopularMovies(movies);
