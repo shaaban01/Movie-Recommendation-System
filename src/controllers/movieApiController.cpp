@@ -95,9 +95,35 @@ bool MovieApiController::FetchMoviesByTitle(std::string movieName, std::vector<M
 
 bool MovieApiController::FetchPopularMovies(std::vector<Movie> &movies)
 {
-    std::string apiKey = std::getenv("API_KEY_TMDB"); // Fetch the API key from the environment variables
+    std::string apiKey = std::getenv("API_KEY_TMDB");
     std::string url = "https://api.themoviedb.org/3/movie/popular?api_key=" + apiKey + "&language=en-US&page=1";
     return FetchMovies(url, movies);
+}
+
+
+bool StoreMovieGenres(std::vector<int> &genres, int movieId)
+{
+    for (int &genreId : genres)
+    {
+        // Check if genre exists
+        std::stringstream ss_check;
+        ss_check << "SELECT * FROM MovieGenres WHERE MovieId = '" << movieId << "' AND GenreId = '" << genreId << "'";
+        sql::ResultSet *result = DB::getInstance()->executeQuery(ss_check.str());
+
+        if (!result->next())
+        { // If genre does not exist, insert it
+            std::stringstream ss_insert;
+            ss_insert << "INSERT INTO MovieGenres (MovieId, GenreId) VALUES ('" << movieId << "', '" << genreId << "')";
+            int count = DB::getInstance()->executeUpdate(ss_insert.str());
+            if (count == 0)
+            {
+                std::cerr << "Failed to store genre data." << std::endl;
+                return false;
+            }
+        }
+        delete result;
+    }
+    return true;
 }
 
 bool MovieApiController::StoreMovie(const std::string movieId)
@@ -110,36 +136,35 @@ bool MovieApiController::StoreMovie(const std::string movieId)
         return false;
     }
 
-    // Prepare SQL statement for Movies table.
-    std::stringstream ss;
-    ss << "INSERT INTO Movies (Id, Title, original_title, original_language, Overview, release_date, "
-       << "Adult, Popularity, Video, vote_average, vote_count, backdrop_path, poster_path) "
-       << "VALUES ('" << movie.id << "', '" << movie.title << "', '" << movie.original_title << "', '"
-       << movie.original_language << "', '" << movie.overview << "', '" << movie.release_date << "', '"
-       << (movie.adult ? 1 : 0) << "', '" << movie.popularity << "', '" << (movie.video ? 1 : 0) << "', '"
-       << movie.vote_average << "', '" << movie.vote_count << "', '" << movie.backdrop_path << "', '"
-       << movie.poster_path << "')";
+    // Check if movie exists
+    std::stringstream ss_check;
+    ss_check << "SELECT * FROM Movies WHERE Id = '" << movie.id << "'";
+    sql::ResultSet *result = DB::getInstance()->executeQuery(ss_check.str());
 
-    // Execute SQL statement for Movies table.
-    int count = DB::getInstance()->executeUpdate(ss.str());
-    if (count == 0)
-    {
-        std::cerr << "Failed to store movie data." << std::endl;
-        return false;
-    }
+    if (!result->next())
+    { // If movie does not exist, insert it
+        // Prepare SQL statement for Movies table.
+        std::stringstream ss_insert;
+        ss_insert << "INSERT INTO Movies (Id, Title, original_title, original_language, Overview, release_date, "
+                  << "Adult, Popularity, Video, vote_average, vote_count, backdrop_path, poster_path) "
+                  << "VALUES ('" << movie.id << "', '" << movie.title << "', '" << movie.original_title << "', '"
+                  << movie.original_language << "', '" << movie.overview << "', '" << movie.release_date << "', '"
+                  << (movie.adult ? 1 : 0) << "', '" << movie.popularity << "', '" << (movie.video ? 1 : 0) << "', '"
+                  << movie.vote_average << "', '" << movie.vote_count << "', '" << movie.backdrop_path << "', '"
+                  << movie.poster_path << "')";
 
-    // Insert each genre id into the MovieGenres table.
-    for (int genre_id : movie.genre_ids)
-    {
-        std::stringstream ss2;
-        ss2 << "INSERT INTO MovieGenres (MovieId, GenreId) VALUES ('" << movieId << "', '" << genre_id << "')";
-        count = DB::getInstance()->executeUpdate(ss2.str());
+        // Execute SQL statement for Movies table.
+        int count = DB::getInstance()->executeUpdate(ss_insert.str());
         if (count == 0)
         {
-            std::cerr << "Failed to store genre data for movie." << std::endl;
+            std::cerr << "Failed to store movie data." << std::endl;
             return false;
         }
+
+        // Store the movie genres data.
+        StoreMovieGenres(movie.genre_ids, movie.id);
     }
+    delete result;
 
     return true;
 }
