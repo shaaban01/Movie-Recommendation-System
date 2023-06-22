@@ -18,19 +18,11 @@ include_directories(~/Projects/cpp_projects/cmake_practice/include/models)
 include_directories(~/Projects/cpp_projects/cmake_practice/include/views)
 include_directories(~/Projects/cpp_projects/cmake_practice/include/)
 
-# Add executable
-add_executable(
-    MovieRecommendatoinSystem 
-    src/main.cpp 
-    src/controllers/movieApiController.cpp
-    src/controllers/userController.cpp
-    src/controllers/authenticationController.cpp
-    src/controllers/ratingController.cpp
-    src/models/movie.cpp
-    src/models/user.cpp
-    src/db.cpp
-    src/views/viewMovies.cpp
-)
+
+set(SOURCES src/main.cpp src/db.cpp src/UBCF.cpp src/testUBCF.cpp src/controllers/authenticationController.cpp src/controllers/movieController.cpp src/controllers/ratingController.cpp src/controllers/userController.cpp src/models/movie.cpp src/models/user.cpp src/views/movieView.cpp )
+
+
+add_executable(MovieRecommendatoinSystem ${SOURCES})
 
 # Link the required libraries
 target_link_libraries(MovieRecommendatoinSystem mysqlcppconn ${CURL_LIBRARIES} nlohmann_json::nlohmann_json)

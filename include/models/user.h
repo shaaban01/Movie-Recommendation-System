@@ -17,13 +17,14 @@ private:
     RatingController ratingController;
 
 public:
+    User() : id(0), username(""), password(""), age(0) {}
     User(int id, std::string username, std::string password, int age);
 
     // Getters
-    int getId();
-    std::string getUsername();
-    std::string getPassword();
-    int getAge();
+    int getId() const;
+    std::string getUsername() const;
+    std::string getPassword() const;
+    int getAge() const;
 
     // Setters
     void setId(int id);

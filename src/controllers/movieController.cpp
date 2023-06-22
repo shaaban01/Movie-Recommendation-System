@@ -1,4 +1,4 @@
-#include "movieApiController.h"
+#include "movieController.h"
 #include "movie.h"
 #ifndef DB_H
 #define DB_H
@@ -49,7 +49,7 @@ bool FetchMovies(std::string url, std::vector<Movie> &movies)
     curl_global_cleanup();
     return true;
 }
-bool MovieApiController::FetchMovieById(const std::string MovieId, Movie &movie)
+bool MovieController::FetchMovieById(const std::string MovieId, Movie &movie)
 {
 
     std::string apiKey = std::getenv("API_KEY_TMDB"); // Fetch the API key from the environment variables
@@ -86,20 +86,19 @@ bool MovieApiController::FetchMovieById(const std::string MovieId, Movie &movie)
     return true;
 }
 
-bool MovieApiController::FetchMoviesByTitle(std::string movieName, std::vector<Movie> &movies)
+bool MovieController::FetchMoviesByTitle(std::string movieName, std::vector<Movie> &movies)
 {
     std::string apiKey = std::getenv("API_KEY_TMDB"); // Fetch the API key from the environment variables
     std::string url = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + movieName + "&language=en-US&page=1";
     return FetchMovies(url, movies);
 }
 
-bool MovieApiController::FetchPopularMovies(std::vector<Movie> &movies)
+bool MovieController::FetchPopularMovies(std::vector<Movie> &movies)
 {
     std::string apiKey = std::getenv("API_KEY_TMDB");
     std::string url = "https://api.themoviedb.org/3/movie/popular?api_key=" + apiKey + "&language=en-US&page=1";
     return FetchMovies(url, movies);
 }
-
 
 bool StoreMovieGenres(std::vector<int> &genres, int movieId)
 {
@@ -126,7 +125,7 @@ bool StoreMovieGenres(std::vector<int> &genres, int movieId)
     return true;
 }
 
-bool MovieApiController::StoreMovie(const std::string movieId)
+bool MovieController::StoreMovie(const std::string movieId)
 {
     // Fetch the movie data.
     Movie movie;
@@ -166,5 +165,34 @@ bool MovieApiController::StoreMovie(const std::string movieId)
     }
     delete result;
 
+    return true;
+}
+
+bool MovieController::GetAllMovies(std::map<int, Movie> &movies)
+{
+    std::stringstream ss;
+    ss << "SELECT * FROM Movies";
+    sql::ResultSet *result = DB::getInstance()->executeQuery(ss.str());
+
+    while (result->next())
+    {
+        Movie movie;
+        movie.id = result->getString("Id");
+        movie.title = result->getString("Title");
+        movie.original_title = result->getString("original_title");
+        movie.original_language = result->getString("original_language");
+        movie.overview = result->getString("Overview");
+        movie.release_date = result->getString("release_date");
+        movie.adult = result->getBoolean("Adult");
+        movie.popularity = result->getDouble("Popularity");
+        movie.video = result->getBoolean("Video");
+        movie.vote_average = result->getDouble("vote_average");
+        movie.vote_count = result->getInt("vote_count");
+        movie.backdrop_path = result->getString("backdrop_path");
+        movie.poster_path = result->getString("poster_path");
+
+        movies.insert(std::pair<int, Movie>(movie.id, movie));
+    }
+    delete result;
     return true;
 }

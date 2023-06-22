@@ -4,11 +4,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 #include <curl/curl.h>
 #include "nlohmann/json.hpp"
 #include "movie.h"
 
-class MovieApiController
+class MovieController
 {
 
 public:
@@ -27,5 +28,10 @@ public:
     // store the specific movie in the database
     // Returns true if the store was successful, false otherwise.
     bool StoreMovie(const std::string MovieId);
+
+    // retrieve all the movies from the database
+    // Returns true if the retrieve was successful, false otherwise.
+    bool GetAllMovies(std::map<std::string, Movie> &movies);
+
 };
 #endif /* MOVIE_FETCH_H */

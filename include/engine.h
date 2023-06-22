@@ -2,6 +2,7 @@
 #define ENGINE_H
 
 #include <vector>
+#include "movie.h"
 #include "user.h"
 
 // The abstract RecommendationStrategy class
@@ -15,18 +16,20 @@ class UserBasedCollaborativeFiltering : public RecommendationStrategy
 {
 private:
     std::map<int, User> users;                   // Users collection
-    std::map<int, std::map<int, float>> ratings; //User-Item matr ix
+    std::map<int, std::map<int, float>> ratings; // User-Item matr ix
+    std::map<int, Movie> movies;                 // Movies collection
     float computeSimilarity(const User &user1, const User &user2);
     std::vector<int> getSimilarUsers(const User &user);
     float predictRating(const User &user, const Movie &movie);
 
 public:
-    UserBasedCollaborativeFiltering(std::map<int, User> &users, std::map<int, std::map<int, float>> &ratings);
+    UserBasedCollaborativeFiltering(std::map<int, User> &users, std::map<int, std::map<int, float>> &ratings, std::map<int, Movie> &movies)
+        : users(users), ratings(ratings), movies(movies) {}
+
     std::vector<Movie> recommend(const User &user, int num_recommendations) override;
 };
 
-
-//TODO: Implement PopularityBasedStrategy 
+// TODO: Implement PopularityBasedStrategy
 class PopularityBasedStrategy : public RecommendationStrategy
 {
 public:

@@ -1,9 +1,7 @@
-#include "engine.h"
 #include <algorithm>
 #include <cmath>
-
-UserBasedCollaborativeFiltering::UserBasedCollaborativeFiltering(std::map<int, User> &users, std::map<int, std::map<int, float>> &ratings)
-    : users(users), ratings(ratings) {}
+#include "engine.h"
+#include "user.h"
 
 float UserBasedCollaborativeFiltering::computeSimilarity(const User &user1, const User &user2)
 {
@@ -55,7 +53,7 @@ float UserBasedCollaborativeFiltering::predictRating(const User &user, const Mov
     for (int userId : similarUsers)
     {
         float sim = computeSimilarity(user, users[userId]);
-        weightedSum += sim * ratings[userId][movie.getId()];
+        weightedSum += sim * ratings[userId][movie.id];
         sumSimilarities += sim;
     }
 
