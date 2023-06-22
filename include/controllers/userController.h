@@ -1,4 +1,8 @@
+
+#ifndef DB_H
+#define DB_H
 #include "db.h"
+#endif
 #include "user.h"
 #include <memory>
 

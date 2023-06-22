@@ -16,6 +16,7 @@ link_directories(/usr/lib)
 include_directories(~/Projects/cpp_projects/cmake_practice/include/controllers)
 include_directories(~/Projects/cpp_projects/cmake_practice/include/models)
 include_directories(~/Projects/cpp_projects/cmake_practice/include/views)
+include_directories(~/Projects/cpp_projects/cmake_practice/include/)
 
 # Add executable
 add_executable(
@@ -23,10 +24,11 @@ add_executable(
     src/main.cpp 
     src/controllers/movieApiController.cpp
     src/controllers/userController.cpp
-    src/controllers/authentication.cpp
+    src/controllers/authenticationController.cpp
+    src/controllers/ratingController.cpp
     src/models/movie.cpp
     src/models/user.cpp
-    src/models/db.cpp
+    src/db.cpp
     src/views/viewMovies.cpp
 )
 

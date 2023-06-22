@@ -3,11 +3,13 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 #include "nlohmann/json.hpp"
 
 class Movie
 {
 public:
+    Movie();
     Movie(const nlohmann::json &movieJson);
 
     bool adult;
@@ -24,6 +26,8 @@ public:
     bool video;
     double vote_average;
     int vote_count;
+
+    void printAttributes() const;
 };
 
 #endif /* MOVIE_H */
