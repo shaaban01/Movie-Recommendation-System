@@ -17,6 +17,7 @@ class CmdAuthentication : public Authentication
 {
 private:
     UserController *userController;
+
 public:
     CmdAuthentication();
     void registerUser() override;

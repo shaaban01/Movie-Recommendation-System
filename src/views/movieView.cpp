@@ -1,5 +1,5 @@
 #include <iostream>
-#include "viewMovies.h"
+#include "movieView.h"
 
 void CmdViewMovies::Display()
 {
