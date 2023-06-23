@@ -31,7 +31,7 @@ public:
 
     // retrieve all the movies from the database
     // Returns true if the retrieve was successful, false otherwise.
-    bool GetAllMovies(std::map<std::string, Movie> &movies);
+    bool GetAllMovies(std::map<int, Movie> &movies);
 
 };
 #endif /* MOVIE_FETCH_H */

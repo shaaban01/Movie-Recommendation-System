@@ -177,7 +177,7 @@ bool MovieController::GetAllMovies(std::map<int, Movie> &movies)
     while (result->next())
     {
         Movie movie;
-        movie.id = result->getString("Id");
+        movie.id = result->getInt("Id");
         movie.title = result->getString("Title");
         movie.original_title = result->getString("original_title");
         movie.original_language = result->getString("original_language");

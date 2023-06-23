@@ -12,6 +12,7 @@ int main()
     // This is just dummy data
     users[1] = User(1, "user1", "password1", 30);
     users[2] = User(2, "user2", "password2", 25);
+    users[3] = User(2, "user3", "password3", 25);
     Movie movie1 = Movie();
     movie1.id = 1;
     movie1.title = "movie1";
@@ -26,16 +27,20 @@ int main()
     movies[2] = movie2;
     movies[3] = movie3;
 
-    ratings[1][1] = 4.5; // user1 rates movie1 4.5
-    ratings[1][2] = 4.0; // user1 rates movie2 4.0
-    ratings[2][1] = 5.0; // user2 rates movie1 5.0
+    ratings[1][1] = 5.0;
+    ratings[1][2] = 1.0;
+    ratings[1][3] = 4.0;
+    ratings[2][1] = 2.0;
+    ratings[2][2] = 2.0;
+    ratings[2][3] = 4.0;
+    ratings[3][1] = 5.0;
 
     // Create UserBasedCollaborativeFiltering object
     UserBasedCollaborativeFiltering ubcf(users, ratings, movies);
 
     // Get recommendation for user1
-    User user = users[1];
-    std::vector<Movie> recommendations = ubcf.recommend(user, 1);
+    User user = users[3];
+    std::vector<Movie> recommendations = ubcf.recommend(user, 2);
 
     // Print out recommended movies
     for (const Movie &movie : recommendations)
