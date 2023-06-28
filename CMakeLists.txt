@@ -19,7 +19,7 @@ include_directories(~/Projects/cpp_projects/cmake_practice/include/views)
 include_directories(~/Projects/cpp_projects/cmake_practice/include/)
 
 
-set(SOURCES src/main.cpp src/db.cpp src/UBCF.cpp src/testUBCF.cpp src/controllers/authenticationController.cpp src/controllers/movieController.cpp src/controllers/ratingController.cpp src/controllers/userController.cpp src/models/movie.cpp src/models/user.cpp src/views/movieView.cpp )
+set(SOURCES src/main.cpp src/db.cpp src/RecommendationEngines/UserBasedCollaborativeFiltering.cpp src/RecommendationEngines/PopularityBasedFiltering.cpp src/test.cpp src/controllers/authenticationController.cpp src/controllers/movieController.cpp src/controllers/ratingController.cpp src/controllers/userController.cpp src/models/movie.cpp src/models/user.cpp src/views/movieView.cpp )
 
 
 add_executable(MovieRecommendatoinSystem ${SOURCES})

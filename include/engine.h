@@ -4,6 +4,7 @@
 #include <vector>
 #include "movie.h"
 #include "user.h"
+#include "movieController.h"
 
 // The abstract RecommendationStrategy class
 class RecommendationStrategy
@@ -29,11 +30,23 @@ public:
     std::vector<Movie> recommend(const User &user, int num_recommendations) override;
 };
 
-// TODO: Implement PopularityBasedStrategy
+// TODO: Implement ContentBasedStrategy
+// class ContentBasedStrategy : public RecommendationStrategy
+// {
+// public:
+//     std::vector<Movie> recommend(const User &user, int num_recommendations) override;
+// };
+
 class PopularityBasedStrategy : public RecommendationStrategy
 {
+private:
+    MovieController movieController;
+    std::vector<Movie> recommend(int num_recommendations);
+
 public:
+    PopularityBasedStrategy(MovieController movieController) : movieController(movieController) {}
     std::vector<Movie> recommend(const User &user, int num_recommendations) override;
+    
 };
 
 class RecommendationEngine
