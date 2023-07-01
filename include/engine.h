@@ -30,12 +30,20 @@ public:
     std::vector<Movie> recommend(const User &user, int num_recommendations) override;
 };
 
-// TODO: Implement ContentBasedStrategy
-// class ContentBasedStrategy : public RecommendationStrategy
-// {
-// public:
-//     std::vector<Movie> recommend(const User &user, int num_recommendations) override;
-// };
+class ContentBasedFiltering : public RecommendationStrategy
+{
+private:
+    std::map<int, User> users;    // Users collection
+    std::map<int, Movie> movies;  // Movies collection
+
+    float calculateSimilarity(const User &user, const Movie &movie);
+
+public:
+    ContentBasedFiltering(std::map<int, User> &users, std::map<int, Movie> &movies)
+        : users(users), movies(movies) {}
+
+    std::vector<Movie> recommend(const User &user, int num_recommendations) override;
+};
 
 class PopularityBasedStrategy : public RecommendationStrategy
 {
@@ -46,7 +54,7 @@ private:
 public:
     PopularityBasedStrategy(MovieController movieController) : movieController(movieController) {}
     std::vector<Movie> recommend(const User &user, int num_recommendations) override;
-    
+
 };
 
 class RecommendationEngine
