@@ -10,7 +10,7 @@ DB *DB::instance = nullptr;
 DB::DB()
 {
     driver = sql::mysql::get_mysql_driver_instance();
-    con = driver->connect("tcp://127.0.0.1:3306/MRS", "root", "2003!!2003@@");
+    con = driver->connect("tcp://127.0.0.1:3306", "root", "2003");
 }
 
 DB *DB::getInstance()

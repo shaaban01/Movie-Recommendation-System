@@ -1,11 +1,14 @@
 #include <string>
 #include <map>
+#include <sstream>
 
 #ifndef DB_H
 #define DB_H
 #include "db.h"
 #endif
-
+#include "movieController.h"
+#include "movie.h"
+#include "user.h"
 class RatingController
 {
 private:
@@ -24,8 +27,8 @@ public:
     bool deleteRating(int userID, int movieID);
 
     // Get a rating.
-    float getRating(int userID, int movieID);
+    float getRating(int userID, int movieID) const;
 
     // Get all ratings of a specific user.
-    std::map<int, float> getAllRatings(int userID);
+    std::map<int, float> getAllRatings(int userID) const;
 };
