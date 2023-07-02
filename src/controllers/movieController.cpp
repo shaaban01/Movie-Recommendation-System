@@ -1,10 +1,7 @@
 #include "movieController.h"
 #include "movie.h"
-#ifndef DB_H
-#define DB_H
 #include "db.h"
 #include "sstream"
-#endif
 
 size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::string *userp)
 {

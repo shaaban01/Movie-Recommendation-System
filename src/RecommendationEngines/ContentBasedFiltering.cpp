@@ -9,14 +9,14 @@ float ContentBasedFiltering::calculateSimilarity(const User &user, const Movie &
     {
         if (user.genre_preferences.find(genre) != user.genre_preferences.end())
         {
-            score += user.genre_preferences[genre];
+            score += user.genre_preferences.at(genre);
         }
     }
 
     // Calculate the score for language
     if (user.language_preferences.find(movie.original_language) != user.language_preferences.end())
     {
-        score += user.language_preferences[movie.original_language];
+        score += user.language_preferences.at(movie.original_language);
     }
 
     return score;

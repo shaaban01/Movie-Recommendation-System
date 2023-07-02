@@ -1,12 +1,13 @@
-// user.h
 #ifndef USER_H
 #define USER_H
 
 #include <string>
 #include <vector>
 #include <memory>
+#include <map>
 #include "ratingController.h"
 
+class RatingController;
 class User
 {
 private:
@@ -14,8 +15,7 @@ private:
     std::string username;
     std::string password;
     int age;
-    RatingController ratingController;
-
+    RatingController *ratingController;
 
 public:
     User() : id(0), username(""), password(""), age(0) {}
@@ -33,10 +33,10 @@ public:
     void setPassword(std::string password);
     void setAge(int age);
 
-    //For User-Based Collaborative Filtering
+    // For User-Based Collaborative Filtering
     std::map<int, float> getRatings(); // Use the RatingController to get ratings
 
-    //For Content-Based Filtering
+    // For Content-Based Filtering
     std::map<int, float> genre_preferences;
     std::map<std::string, float> language_preferences;
 };

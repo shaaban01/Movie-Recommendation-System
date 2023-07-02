@@ -3,39 +3,45 @@
 #include "authenticationController.h"
 #include "movieController.h"
 #include "movieView.h"
+#include "engine.h"
 
-// int main()
-// {
-//     std::unique_ptr<Authentication> auth = std::make_unique<CmdAuthentication>();
-//     while (!auth->isAuthenticated())
-//     {
-//         auth->authenticate();
-//     }
+int main()
+{
+    UserController *userController = new UserController();
 
-//     std::vector<Movie> movies;
-//     Movie movie;
-//     std::unique_ptr<MovieController> movieController = std::make_unique<MovieController>();
-//     movieController->FetchMoviesByTitle("The Matrix", movies);
-//     movieController->FetchMovieById("508602", movie);
-//     movie.printAttributes();
-//     movieController->StoreMovie("508602");
-//     std::unique_ptr<ViewMovies> viewer = std::make_unique<CmdViewMovies>(movies);
-//     viewer->Display();
-//     std::unique_ptr<RatingController> ratingController = std::make_unique<RatingController>();
-//     if (ratingController->createRating(1, 508602, 8.5))
-//     {
-//         std::cout << "Rating created successfully\n";
-//     }
-//     else
-//     {
-//         std::cout << "Rating creation failed\n";
-//     }
+    userController->createUser("Mo2", "pass1234", 30);
+    // std::unique_ptr<Authentication> auth = std::make_unique<CmdAuthentication>();
+    // while (!auth->isAuthenticated())
+    // {
+    //     auth->authenticate();
+    // }
 
-//     std::map<int, float> ratings = ratingController->getAllRatings(1);
+    // // Assuming that authentication is successful and a user object is returned
+    // UserController userController;
+    // std::unique_ptr<User> user = userController.getUser(1); // Assuming 1 is the authenticated user's ID
 
-//     for (const auto &elem : ratings)
-//     {
-//         std::cout << elem.first << " " << elem.second << "\n";
-//     }
-//     return 0;
-// }
+    // // Recommendation Engine Configuration
+    // MovieController movieController;
+    // std::map<int, Movie> allMovies;
+    // if (movieController.GetAllMovies(allMovies))
+    // {
+    //     // Create the Recommendation Strategy
+    //     UserBasedCollaborativeFiltering ucfStrategy(user->getRatings(), allMovies);
+    //     RecommendationEngine recommendationEngine(&ucfStrategy);
+
+    //     // Get Recommendations
+    //     std::vector<Movie> recommendations = recommendationEngine.recommend(*user, 5); // Assuming you want 5 recommendations
+
+    //     // Display Recommendations
+    //     for (Movie &movie : recommendations)
+    //     {
+    //         movie.printAttributes();
+    //     }
+    // }
+    // else
+    // {
+    //     std::cout << "Failed to fetch all movies\n";
+    // }
+
+    return 0;
+}
