@@ -7,7 +7,7 @@ RatingController::RatingController()
 
 bool RatingController::createRating(int userID, std::string movieID, float rating)
 {
-    if (!(movieController->StoreMovie(movieID)))
+    if (!(movieController->storeMovie(movieID)))
         std::cout << "ERROR: Cannot Save movie " << movieID << std::endl;
 
     std::stringstream ss;
@@ -19,7 +19,7 @@ bool RatingController::createRating(int userID, std::string movieID, float ratin
         // Fetch the user and the movie from the database
         std::unique_ptr<User> user = userController->getUser(userID);
         Movie *movie;
-        movieController->FetchMovieById(movieID, *movie);
+        movieController->fetchMovieById(movieID, *movie);
 
         // Update the user's genre preferences
         for (int genre : movie->genre_ids)
@@ -52,7 +52,7 @@ bool RatingController::updateRating(int userID, std::string movieID, float newRa
         // Fetch the user and the movie from the database
         std::unique_ptr<User> user = userController->getUser(userID);
         Movie *movie;
-        movieController->FetchMovieById(movieID, *movie);
+        movieController->fetchMovieById(movieID, *movie);
 
         // Update the user's genre preferences
         for (int genre : movie->genre_ids)
@@ -87,7 +87,7 @@ bool RatingController::deleteRating(int userID, std::string movieID)
         // Fetch the user and the movie from the database
         std::unique_ptr<User> user = userController->getUser(userID);
         Movie *movie;
-        movieController->FetchMovieById(movieID, *movie);
+        movieController->fetchMovieById(movieID, *movie);
 
         // Update the user's genre preferences
         for (int genre : movie->genre_ids)

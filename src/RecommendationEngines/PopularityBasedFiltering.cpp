@@ -9,7 +9,7 @@ std::vector<Movie> PopularityBasedStrategy::recommend(int num_recommendations)
 {
     std::vector<Movie> popularMovies;
 
-    if (!movieController.FetchPopularMovies(popularMovies))
+    if (!movieController.fetchPopularMovies(popularMovies))
     {
         std::cerr << "Failed to fetch popular movies." << std::endl;
         return std::vector<Movie>(); // Return an empty vector on failure

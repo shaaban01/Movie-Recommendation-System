@@ -1,4 +1,3 @@
-// authentication.h
 #include <string>
 #include "userController.h"
 

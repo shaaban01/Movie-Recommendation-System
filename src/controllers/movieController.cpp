@@ -9,7 +9,7 @@ size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::string *use
     return size * nmemb;
 }
 
-bool FetchMovies(std::string url, std::vector<Movie> &movies)
+bool fetchMovies(std::string url, std::vector<Movie> &movies)
 {
     CURL *curl;
     CURLcode res;
@@ -46,7 +46,7 @@ bool FetchMovies(std::string url, std::vector<Movie> &movies)
     curl_global_cleanup();
     return true;
 }
-bool MovieController::FetchMovieById(const std::string MovieId, Movie &movie)
+bool MovieController::fetchMovieById(const std::string MovieId, Movie &movie)
 {
 
     std::string apiKey = std::getenv("API_KEY_TMDB"); // Fetch the API key from the environment variables
@@ -83,21 +83,21 @@ bool MovieController::FetchMovieById(const std::string MovieId, Movie &movie)
     return true;
 }
 
-bool MovieController::FetchMoviesByTitle(std::string movieName, std::vector<Movie> &movies)
+bool MovieController::fetchMoviesByTitle(std::string movieName, std::vector<Movie> &movies)
 {
     std::string apiKey = std::getenv("API_KEY_TMDB"); // Fetch the API key from the environment variables
     std::string url = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + movieName + "&language=en-US&page=1";
-    return FetchMovies(url, movies);
+    return fetchMovies(url, movies);
 }
 
-bool MovieController::FetchPopularMovies(std::vector<Movie> &movies)
+bool MovieController::fetchPopularMovies(std::vector<Movie> &movies)
 {
     std::string apiKey = std::getenv("API_KEY_TMDB");
     std::string url = "https://api.themoviedb.org/3/movie/popular?api_key=" + apiKey + "&language=en-US&page=1";
-    return FetchMovies(url, movies);
+    return fetchMovies(url, movies);
 }
 
-bool StoreMovieGenres(std::vector<int> &genres, int movieId)
+bool storeMovieGenres(std::vector<int> &genres, int movieId)
 {
     for (int &genreId : genres)
     {
@@ -122,11 +122,11 @@ bool StoreMovieGenres(std::vector<int> &genres, int movieId)
     return true;
 }
 
-bool MovieController::StoreMovie(const std::string movieId)
+bool MovieController::storeMovie(const std::string movieId)
 {
     // Fetch the movie data.
     Movie movie;
-    if (!FetchMovieById(movieId, movie))
+    if (!fetchMovieById(movieId, movie))
     {
         std::cerr << "Failed to fetch movie data." << std::endl;
         return false;
@@ -158,14 +158,14 @@ bool MovieController::StoreMovie(const std::string movieId)
         }
 
         // Store the movie genres data.
-        StoreMovieGenres(movie.genre_ids, movie.id);
+        storeMovieGenres(movie.genre_ids, movie.id);
     }
     delete result;
 
     return true;
 }
 
-bool MovieController::GetAllMovies(std::map<int, Movie> &movies)
+bool MovieController::getAllMovies(std::map<int, Movie> &movies)
 {
     std::stringstream ss;
     ss << "SELECT * FROM Movies";
