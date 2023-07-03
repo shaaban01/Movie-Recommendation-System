@@ -15,5 +15,5 @@ void User::setAge(int age) { this->age = age; }
 
 std::map<int, float> User::getRatings()
 {
-    return ratingController.getAllRatings(id);
+    return ratingController->getAllRatings(id);
 }

@@ -1,16 +1,26 @@
-
-#ifndef DB_H
-#define DB_H
 #include "db.h"
-#endif
-#include <iostream>
 
 DB *DB::instance = nullptr;
 
 DB::DB()
 {
     driver = sql::mysql::get_mysql_driver_instance();
-    con = driver->connect("tcp://127.0.0.1:3306/MRS", "root", "2003!!2003@@");
+
+    // Azure SQL database connection parameters
+    std::string server = "movie-recommendation-system.mysql.database.azure.com";
+    int port = 3306; // Default port for Azure SQL database
+    std::string username = "MRSAdmin";
+    std::string password = std::getenv("MRSDB_PASSWORD");
+    std::string database = "mrsdb";
+
+    // Connection URL
+    std::string url = "tcp://" + server + ":" + std::to_string(port);
+
+    // Create connection
+    con = driver->connect(url, username, password);
+
+    // Select the database
+    con->setSchema(database);
 }
 
 DB *DB::getInstance()

@@ -1,3 +1,6 @@
+#ifndef DB_H
+#define DB_H
+
 #include <mysql_driver.h>
 #include <mysql_connection.h>
 
@@ -6,8 +9,10 @@
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
 #include <string>
+#include <iostream>
 
-class DB {
+class DB
+{
 private:
     static DB *instance;
     sql::mysql::MySQL_Driver *driver;
@@ -21,6 +26,8 @@ private:
 
 public:
     static DB *getInstance();
-    sql::ResultSet* executeQuery(const std::string& query);
-    int executeUpdate(const std::string& update);
+    sql::ResultSet *executeQuery(const std::string &query);
+    int executeUpdate(const std::string &update);
 };
+
+#endif // DB_H

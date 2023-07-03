@@ -41,10 +41,10 @@ bool UserController::deleteUser(int userId)
     return rowsAffected > 0;
 }
 
-bool UserController::updateUser(User &user)
+bool UserController::updateUser(std::unique_ptr<User> &user)
 {
     std::stringstream query;
-    query << "UPDATE Users SET UserName='" << user.getUsername() << "', Password='" << user.getPassword() << "', Age=" << user.getAge() << " WHERE UserID=" << user.getId();
+    query << "UPDATE Users SET UserName='" << user->getUsername() << "', Password='" << user->getPassword() << "', Age=" << user->getAge() << " WHERE UserID=" << user->getId();
 
     int rowsAffected = db->executeUpdate(query.str());
 
