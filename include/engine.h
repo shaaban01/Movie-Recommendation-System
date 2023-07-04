@@ -67,6 +67,7 @@ class PopularityBasedStrategy : public RecommendationStrategy
 {
 private:
     MovieController movieController;
+    std::vector<Movie> recommend(int num_recommendations);
 
 public:
     // Constructor that initializes the MovieController.
