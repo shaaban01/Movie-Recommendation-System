@@ -1,14 +1,14 @@
 #include "userController.h"
 #include <sstream>
 
-UserController::~UserController()
-{
-    // nothing to clean up
-}
-
 UserController::UserController(QObject *parent) : QObject(parent)
 {
     db = DB::getInstance();
+}
+
+UserController::~UserController()
+{
+    // nothing to clean up
 }
 
 std::unique_ptr<User> UserController::getUser(int userId)

@@ -17,7 +17,7 @@ private:
 
 public:
     explicit UserController(QObject *parent = nullptr);
-    ~UserController();
+    ~UserController() override;
     // User operations
     std::unique_ptr<User> getUser(int userId);
     bool createUser(const std::string &username, const std::string &password, int age);
