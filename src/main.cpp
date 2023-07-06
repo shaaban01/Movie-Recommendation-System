@@ -1,47 +1,22 @@
 #include <iostream>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 #include <memory>
 #include "authenticationController.h"
 #include "movieController.h"
 #include "movieView.h"
 #include "engine.h"
 
-int main()
+int main(int argc, char *argv[])
 {
-    UserController *userController = new UserController();
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    userController->createUser("Mo2", "pass1234", 30);
-    // std::unique_ptr<Authentication> auth = std::make_unique<CmdAuthentication>();
-    // while (!auth->isAuthenticated())
-    // {
-    //     auth->authenticate();
-    // }
+    QGuiApplication app(argc, argv);
 
-    // // Assuming that authentication is successful and a user object is returned
-    // UserController userController;
-    // std::unique_ptr<User> user = userController.getUser(1); // Assuming 1 is the authenticated user's ID
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/src/qml/main.qml")));
+    if (engine.rootObjects().isEmpty())
+        return -1;
 
-    // // Recommendation Engine Configuration
-    // MovieController movieController;
-    // std::map<int, Movie> allMovies;
-    // if (movieController.GetAllMovies(allMovies))
-    // {
-    //     // Create the Recommendation Strategy
-    //     UserBasedCollaborativeFiltering ucfStrategy(user->getRatings(), allMovies);
-    //     RecommendationEngine recommendationEngine(&ucfStrategy);
-
-    //     // Get Recommendations
-    //     std::vector<Movie> recommendations = recommendationEngine.recommend(*user, 5); // Assuming you want 5 recommendations
-
-    //     // Display Recommendations
-    //     for (Movie &movie : recommendations)
-    //     {
-    //         movie.printAttributes();
-    //     }
-    // }
-    // else
-    // {
-    //     std::cout << "Failed to fetch all movies\n";
-    // }
-
-    return 0;
+    return app.exec();
 }
