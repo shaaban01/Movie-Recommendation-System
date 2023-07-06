@@ -6,5 +6,7 @@
     <file>src/qml/Movie.qml</file>
     <file>src/qml/MovieList.qml</file>
     <file>src/qml/MovieGrid.qml</file>
+    <file>src/qml/NavBar.qml</file>
+    <file>src/qml/SearchBar.qml</file>
 </qresource>
 </RCC>

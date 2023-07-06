@@ -14,6 +14,7 @@ Item {
             text: root.listTitle
             font.pointSize: 24
             font.bold: true
+            color: "#D4ADFC"
         }
 
         GridView {
