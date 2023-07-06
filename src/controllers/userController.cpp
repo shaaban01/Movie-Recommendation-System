@@ -1,7 +1,12 @@
 #include "userController.h"
 #include <sstream>
 
-UserController::UserController()
+UserController::~UserController()
+{
+    // nothing to clean up
+}
+
+UserController::UserController(QObject *parent) : QObject(parent)
 {
     db = DB::getInstance();
 }
@@ -75,11 +80,13 @@ bool UserController::loginUser(const std::string &username, const std::string &p
     {
         std::cout << "Login successful!\n";
         authenticated = true;
+
         return true;
     }
     else
     {
         std::cout << "Login failed!\n";
+        emit loginFailed();
         return false;
     }
 }
@@ -88,3 +95,22 @@ bool UserController::isAuthenticated()
 {
     return authenticated;
 }
+
+bool UserController::loginUser(const QString &username, const QString &password)
+{
+    if (loginUser(username.toStdString(), password.toStdString()))
+    {
+        emit loginSuccessful();
+        return true;
+    }
+    else
+    {
+        emit loginFailed();
+        return false;
+    }
+}
+
+// bool UserController::registerUser(const QString &username, const QString &password, int age)
+// {
+//     return createUser(username.toStdString(), password.toStdString(), age);
+// }

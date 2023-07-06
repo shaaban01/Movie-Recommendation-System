@@ -2,46 +2,68 @@ import QtQuick 2.12
 import QtQuick.Controls 2.5
 
 Page {
-    Column {
-        anchors.centerIn: parent
-        spacing: 20
+    property string username: ""
+        property string password: ""
+            property alias userController: userController
 
-        Label {
-           text: "LOGIN"
-           font.pointSize: 24
-           font.bold: true
-           horizontalAlignment: Text.AlignHCenter
-           width: 200
-        }
+                UserController {
+                    id: userController
+                    onLoginSuccessful: {
+                        console.log("Login Successful");
+                        stackView.clear(); // after successful login
+                    }
+                    onLoginFailed: {
+                        console.log("Login Failed");
+                        // You may want to show a message box here
+                    }
+                }
+                Column {
+                    anchors.centerIn: parent
+                    spacing: 20
 
-        TextField {
-            id: usernameField
-            placeholderText: "Username"
-            width: 200
-        }
+                    Label {
+                        text: "LOGIN"
+                        font.pointSize: 24
+                        font.bold: true
+                        horizontalAlignment: Text.AlignHCenter
+                        width: 200
+                    }
 
-        TextField {
-            id: passwordField
-            placeholderText: "Password"
-            width: 200
-            echoMode: TextInput.Password
-        }
+                    TextField {
+                        id: usernameField
+                        placeholderText: "Username"
+                        width: 200
+                        onTextChanged: {
+                            username = usernameField.text
+                        }
+                    }
 
-        Button {
-            id: loginButton
-            text: "Log In"
-            width: 200
-            onClicked: {
-                console.log("Logging in...")
-                stackView.clear() // after successful login
+                    TextField {
+                        id: passwordField
+                        placeholderText: "Password"
+                        width: 200
+                        echoMode: TextInput.Password
+                        onTextChanged: {
+                            password = passwordField.text
+                        }
+                    }
+
+                    Button {
+                        id: loginButton
+                        text: "Log In"
+                        width: 200
+                        onClicked: {
+                            console.log("Logging in...")
+                            userController.loginUser(usernameField.text, passwordField.text);
+                        }
+                    }
+                }
+
+                Button {
+                    id: signupButton
+                    text: "Go to Sign Up"
+                    width: 200
+                    onClicked: stackView.push(Qt.resolvedUrl("Signup.qml"))
+                }
             }
-        }
 
-        Button {
-            id: signupButton
-            text: "Go to Sign Up"
-            width: 200
-            onClicked: stackView.push(Qt.resolvedUrl("Signup.qml"))
-        }
-    }
-}
