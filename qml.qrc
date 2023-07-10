@@ -1,0 +1,12 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>src/qml/main.qml</file>
+    <file>src/qml/Login.qml</file>
+    <file>src/qml/Signup.qml</file>
+    <file>src/qml/Movie.qml</file>
+    <file>src/qml/MovieList.qml</file>
+    <file>src/qml/MovieGrid.qml</file>
+    <file>src/qml/NavBar.qml</file>
+    <file>src/qml/SearchBar.qml</file>
+</qresource>
+</RCC>
