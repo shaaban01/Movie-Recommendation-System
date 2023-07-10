@@ -11,6 +11,16 @@ UserController::~UserController()
     // nothing to clean up
 }
 
+int UserController::getUserId()
+{
+    return currentUserId;
+}
+
+void UserController::setUserId(int userId)
+{
+    currentUserId = userId;
+}
+
 std::unique_ptr<User> UserController::getUser(int userId)
 {
     std::stringstream query;
@@ -35,8 +45,9 @@ int UserController::createUser(const std::string &username, const std::string &p
 
     if (rowsAffected > 0)
     {
-        // Return the user ID of the created user
-        return db->getLastInsertId();
+
+        setUserId(db->getLastInsertId());
+        return getUserId();
     }
     else
     {
@@ -96,7 +107,8 @@ int UserController::loginUser(const std::string &username, const std::string &pa
         authenticated = true;
 
         // Return the user ID of the logged-in user
-        return res->getInt("UserID");
+        setUserId(res->getInt("UserID"));
+        return getUserId();
     }
     else
     {

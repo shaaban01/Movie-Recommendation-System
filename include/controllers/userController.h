@@ -14,12 +14,16 @@ class UserController : public QObject
 private:
     DB *db;
     bool authenticated = false;
+    int currentUserId = -1;
 
 public:
     explicit UserController(QObject *parent = nullptr);
     ~UserController() override;
     // User operations
     std::unique_ptr<User> getUser(int userId);
+
+    Q_INVOKABLE int getUserId();
+    void setUserId(int userId);
 
     // will return the user id if successful, -1 otherwise
     int createUser(const std::string &username, const std::string &password, int age);
@@ -32,7 +36,7 @@ public:
     void registerUser(const std::string &username, const std::string &password, int age);
 
     // will return the user id if successful, -1 otherwise
-    int loginUser(const std::string &username, const std::string &password) ;
+    int loginUser(const std::string &username, const std::string &password);
 
     bool isAuthenticated();
 

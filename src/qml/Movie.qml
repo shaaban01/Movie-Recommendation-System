@@ -3,6 +3,8 @@ import QtQuick.Controls 2.5
 
 Item {
     id: root
+    
+    property  int movieId: 0;
     property string imageUrl: ""
     property string movieTitle: ""
     readonly property string baseUrl: "https://image.tmdb.org/t/p/original/"
