@@ -26,14 +26,23 @@ std::unique_ptr<User> UserController::getUser(int userId)
     return nullptr;
 }
 
-bool UserController::createUser(const std::string &username, const std::string &password, int age)
+int UserController::createUser(const std::string &username, const std::string &password, int age)
 {
     std::stringstream query;
     query << "INSERT INTO Users(UserName, Password, Age) VALUES('" << username << "','" << password << "'," << age << ")";
 
     int rowsAffected = db->executeUpdate(query.str());
 
-    return rowsAffected > 0;
+    if (rowsAffected > 0)
+    {
+        // Return the user ID of the created user
+        return db->getLastInsertId();
+    }
+    else
+    {
+        // Return -1 to indicate failure
+        return -1;
+    }
 }
 
 bool UserController::deleteUser(int userId)
@@ -69,7 +78,12 @@ void UserController::registerUser(const std::string &username, const std::string
     }
 }
 
-bool UserController::loginUser(const std::string &username, const std::string &password)
+bool UserController::isAuthenticated()
+{
+    return authenticated;
+}
+
+int UserController::loginUser(const std::string &username, const std::string &password)
 {
     std::stringstream query;
     query << "SELECT * FROM Users WHERE UserName='" << username << "' AND Password='" << password << "'";
@@ -81,45 +95,45 @@ bool UserController::loginUser(const std::string &username, const std::string &p
         std::cout << "Login successful!\n";
         authenticated = true;
 
-        return true;
+        // Return the user ID of the logged-in user
+        return res->getInt("UserID");
     }
     else
     {
         std::cout << "Login failed!\n";
         emit loginFailed();
-        return false;
+
+        // Return -1 to indicate failure
+        return -1;
     }
 }
 
-bool UserController::isAuthenticated()
+int UserController::loginUser(const QString &username, const QString &password)
 {
-    return authenticated;
-}
+    int userId = loginUser(username.toStdString(), password.toStdString());
 
-bool UserController::loginUser(const QString &username, const QString &password)
-{
-    if (loginUser(username.toStdString(), password.toStdString()))
+    if (userId != -1)
     {
         emit loginSuccessful();
-        return true;
     }
     else
     {
         emit loginFailed();
-        return false;
     }
+
+    return userId;
 }
 
-bool UserController::registerUser(const QString &username, const QString &password, int age)
+int UserController::registerUser(const QString &username, const QString &password, int age)
 {
-    if (createUser(username.toStdString(), password.toStdString(), age))
+    int userId = createUser(username.toStdString(), password.toStdString(), age);
+    if (userId != -1)
     {
         emit registrationSuccessful();
-        return true;
     }
     else
     {
         emit registrationFailed();
-        return false;
     }
+    return userId;
 }

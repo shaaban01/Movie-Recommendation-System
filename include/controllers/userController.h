@@ -20,18 +20,25 @@ public:
     ~UserController() override;
     // User operations
     std::unique_ptr<User> getUser(int userId);
-    bool createUser(const std::string &username, const std::string &password, int age);
+
+    // will return the user id if successful, -1 otherwise
+    int createUser(const std::string &username, const std::string &password, int age);
     bool deleteUser(int userId);
     bool updateUser(std::unique_ptr<User> &user);
 
-    // Authentication operations
+    // Authentication operations:
+
+    // will return the user id if successful, -1 otherwise
     void registerUser(const std::string &username, const std::string &password, int age);
-    bool loginUser(const std::string &username, const std::string &password);
+
+    // will return the user id if successful, -1 otherwise
+    int loginUser(const std::string &username, const std::string &password) ;
+
     bool isAuthenticated();
 
     // QML invokable methods
-    Q_INVOKABLE bool loginUser(const QString &username, const QString &password);
-    Q_INVOKABLE bool registerUser(const QString &username, const QString &password, int age);
+    Q_INVOKABLE int loginUser(const QString &username, const QString &password);
+    Q_INVOKABLE int registerUser(const QString &username, const QString &password, int age);
 
 signals:
     void loginSuccessful();
