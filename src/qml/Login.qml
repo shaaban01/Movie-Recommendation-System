@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
+import user.controller 1.0
 
 Page {
     property string username: ""
@@ -14,7 +15,7 @@ Page {
                     }
                     onLoginFailed: {
                         console.log("Login Failed");
-                        // You may want to show a message box here
+                        // TODO: to show a message box here
                     }
                 }
                 Column {
@@ -54,7 +55,7 @@ Page {
                         width: 200
                         onClicked: {
                             console.log("Logging in...")
-                            userController.loginUser(usernameField.text, passwordField.text);
+                            userController.loginUser(username, password);
                         }
                     }
                 }

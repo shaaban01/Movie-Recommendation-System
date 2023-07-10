@@ -110,7 +110,16 @@ bool UserController::loginUser(const QString &username, const QString &password)
     }
 }
 
-// bool UserController::registerUser(const QString &username, const QString &password, int age)
-// {
-//     return createUser(username.toStdString(), password.toStdString(), age);
-// }
+bool UserController::registerUser(const QString &username, const QString &password, int age)
+{
+    if (createUser(username.toStdString(), password.toStdString(), age))
+    {
+        emit registrationSuccessful();
+        return true;
+    }
+    else
+    {
+        emit registrationFailed();
+        return false;
+    }
+}

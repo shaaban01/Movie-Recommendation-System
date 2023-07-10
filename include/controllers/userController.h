@@ -31,11 +31,13 @@ public:
 
     // QML invokable methods
     Q_INVOKABLE bool loginUser(const QString &username, const QString &password);
-    // Q_INVOKABLE bool registerUser(const QString &username, const QString &password, int age);
+    Q_INVOKABLE bool registerUser(const QString &username, const QString &password, int age);
 
 signals:
     void loginSuccessful();
     void loginFailed();
+    void registrationSuccessful();
+    void registrationFailed();
 };
 
 #endif // USER_CONTROLLER_H

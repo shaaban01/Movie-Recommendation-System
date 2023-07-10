@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
 
     UserController userController;
 
+    qmlRegisterType<UserController>("user.controller", 1, 0, "UserController");
+
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/src/qml/main.qml"));
     QObject::connect(
