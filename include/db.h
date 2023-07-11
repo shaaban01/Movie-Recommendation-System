@@ -28,6 +28,9 @@ public:
     static DB *getInstance();
     sql::ResultSet *executeQuery(const std::string &query);
     int executeUpdate(const std::string &update);
+    int getLastInsertId();
 };
+
+
 
 #endif // DB_H

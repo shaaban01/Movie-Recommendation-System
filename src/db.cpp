@@ -52,3 +52,14 @@ int DB::executeUpdate(const std::string &update)
     delete stmt;
     return count;
 }
+
+int DB::getLastInsertId()
+{
+    sql::Statement *stmt = con->createStatement();
+    std::string query = "SELECT LAST_INSERT_ID()";
+    sql::ResultSet *res = stmt->executeQuery(query);
+    res->next();
+    int id = res->getInt(1);
+    delete stmt;
+    return id;
+}

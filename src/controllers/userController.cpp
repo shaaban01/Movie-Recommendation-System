@@ -27,7 +27,7 @@ bool UserController::createUser(const std::string &username, const std::string &
     query << "INSERT INTO Users(UserName, Password, Age) VALUES('" << username << "','" << password << "'," << age << ")";
 
     int rowsAffected = db->executeUpdate(query.str());
-
+    currentUserId = db->getLastInsertId();
     return rowsAffected > 0;
 }
 
@@ -75,6 +75,7 @@ bool UserController::loginUser(const std::string &username, const std::string &p
     {
         std::cout << "Login successful!\n";
         authenticated = true;
+        res->getInt("UserID");
         return true;
     }
     else

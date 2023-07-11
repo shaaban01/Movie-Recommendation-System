@@ -1,6 +1,7 @@
 #include <iostream>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <memory>
 #include "authenticationController.h"
 #include "movieController.h"
