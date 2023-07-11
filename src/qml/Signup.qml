@@ -7,11 +7,11 @@ Page {
         spacing: 20
 
         Label {
-           text: "REGISTER"
-           font.pointSize: 24
-           font.bold: true
-           horizontalAlignment: Text.AlignHCenter
-           width: 200
+            text: "REGISTER"
+            font.pointSize: 24
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+            width: 200
         }
 
         TextField {
@@ -46,19 +46,26 @@ Page {
             text: "Sign Up"
             width: 200
             enabled: ageField.acceptableInput &&
-                      passwordField.text.length >= 6 &&
-                      passwordField.text === confirmPasswordField.text
+            passwordField.text.length >= 6 &&
+            passwordField.text === confirmPasswordField.text
             onClicked: {
                 console.log("Signing up...")
-                //stackView.pop() // after successful sign up
+                if (userController.registerUserQML(usernameField.text, passwordField.text, ageField.text))
+                {
+                    console.log("Sign up successful!")
+                    stackView.clear()
+
+                }else {
+                console.log("Sign up failed!")
             }
         }
-
-        Button {
-            id: loginButton
-            text: "Go to Login"
-            width: 200
-            onClicked: stackView.pop()
-        }
     }
+
+    Button {
+        id: loginButton
+        text: "Go to Login"
+        width: 200
+        onClicked: stackView.pop()
+    }
+}
 }

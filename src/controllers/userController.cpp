@@ -1,5 +1,6 @@
 #include "userController.h"
 #include <sstream>
+#include <iostream>
 
 UserController::UserController()
 {
@@ -51,21 +52,26 @@ bool UserController::updateUser(std::unique_ptr<User> &user)
     return rowsAffected > 0;
 }
 
-void UserController::registerUser(const std::string &username, const std::string &password, int age)
+bool UserController::registerUser(const std::string &username, const std::string &password, int age)
 {
     if (createUser(username, password, age))
     {
         std::cout << "Registration successful!\n";
         authenticated = true;
+        return true;
     }
     else
     {
         std::cout << "Registration failed!\n";
+        return false;
     }
 }
 
 bool UserController::loginUser(const std::string &username, const std::string &password)
 {
+    std::cout << "Logging in...\n";
+    std::cout << "Username: " << username << "\n";
+    std::cout << "Password: " << password << "\n";
     std::stringstream query;
     query << "SELECT * FROM Users WHERE UserName='" << username << "' AND Password='" << password << "'";
 
@@ -75,7 +81,8 @@ bool UserController::loginUser(const std::string &username, const std::string &p
     {
         std::cout << "Login successful!\n";
         authenticated = true;
-        res->getInt("UserID");
+
+        currentUserId =  res->getInt("UserID");
         return true;
     }
     else
@@ -88,4 +95,25 @@ bool UserController::loginUser(const std::string &username, const std::string &p
 bool UserController::isAuthenticated()
 {
     return authenticated;
+}
+
+int UserController::getCurrentUserId() const
+{
+    return currentUserId;
+}
+
+void UserController::setCurrentUserId(int value)
+{
+    currentUserId = value;
+    emit currentUserIdChanged(value);
+}
+
+bool UserController::registerUserQML(const QString &username, const QString &password, int age)
+{
+    return registerUser(username.toStdString(), password.toStdString(), age);
+}
+
+bool UserController::loginUserQML(const QString &username, const QString &password)
+{
+    return loginUser(username.toStdString(), password.toStdString());
 }

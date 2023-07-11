@@ -7,11 +7,11 @@ Page {
         spacing: 20
 
         Label {
-           text: "LOGIN"
-           font.pointSize: 24
-           font.bold: true
-           horizontalAlignment: Text.AlignHCenter
-           width: 200
+            text: "LOGIN"
+            font.pointSize: 24
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+            width: 200
         }
 
         TextField {
@@ -33,15 +33,24 @@ Page {
             width: 200
             onClicked: {
                 console.log("Logging in...")
-                stackView.clear() // after successful login
+                console.log("Username: " + usernameField.text)
+                console.log("Password: " + passwordField.text)
+                if (userController.loginUserQML(usernameField.text, passwordField.text))
+                {
+                    console.log("Login successful")
+                    stackView.clear() // after successful login
+                }else
+            {
+                console.log("Login failed")
             }
         }
-
-        Button {
-            id: signupButton
-            text: "Go to Sign Up"
-            width: 200
-            onClicked: stackView.push(Qt.resolvedUrl("Signup.qml"))
-        }
     }
+
+    Button {
+        id: signupButton
+        text: "Go to Sign Up"
+        width: 200
+        onClicked: stackView.push(Qt.resolvedUrl("Signup.qml"))
+    }
+}
 }
