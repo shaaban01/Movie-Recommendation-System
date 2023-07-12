@@ -21,11 +21,13 @@ int main(int argc, char *argv[])
     RecommendationEngine recommendationEngineContentBased(&strategyContentBased);
     UserBasedCollaborativeFiltering strategyUserBased;
     RecommendationEngine recommendationEngineUserBased(&strategyUserBased);
+    RatingController ratingController;
 
     engine.rootContext()->setContextProperty("recommendationEnginePopularity", &recommendationEnginePopularity);
     engine.rootContext()->setContextProperty("recommendationEngineContentBased", &recommendationEngineContentBased);
     engine.rootContext()->setContextProperty("recommendationEngineUserBased", &recommendationEngineUserBased);
     engine.rootContext()->setContextProperty("userController", &userController);
+    engine.rootContext()->setContextProperty("ratingController", &ratingController);
 
     engine.load(QUrl(QStringLiteral("qrc:/src/qml/main.qml")));
     if (engine.rootObjects().isEmpty())

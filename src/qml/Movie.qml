@@ -91,13 +91,7 @@ Item {
                     font.pixelSize: 24
                     wrapMode: Text.WordWrap
                 }
-                //temp
-                Label {
-                    id: idlabel
-                    text: root.movieId
-                    font.pixelSize: 24
-                    wrapMode: Text.WordWrap
-                }
+
 
                 RowLayout {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -105,8 +99,9 @@ Item {
                     Button {
                         text: "watched"
                         onClicked: {
-                        console.log("rate the movie")
-                        movieDetailPopup.close()
+                            console.log("rate the movie")
+                            ratingController.createRatingQML(userController.currentUserId, root.movieId, 5)
+                            movieDetailPopup.close()
                         }
                     }
                     Button {
@@ -122,3 +117,4 @@ Item {
         }
     }
 }
+

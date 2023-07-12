@@ -8,6 +8,7 @@
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
+#include <cppconn/prepared_statement.h>
 #include <string>
 #include <iostream>
 
@@ -19,6 +20,7 @@ private:
     sql::Connection *con;
 
     DB();
+    ~DB();
     DB(const DB &) = delete;
     DB &operator=(const DB &) = delete;
 
@@ -29,8 +31,7 @@ public:
     sql::ResultSet *executeQuery(const std::string &query);
     int executeUpdate(const std::string &update);
     int getLastInsertId();
+    sql::PreparedStatement *prepareStatement(const std::string &query);
 };
-
-
 
 #endif // DB_H

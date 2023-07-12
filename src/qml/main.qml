@@ -66,14 +66,14 @@ Window {
                                 contentBasedId.movies = recommendationsArray;
 
                                 recommendationsArray = [];
-                                recommendationsVariant = recommendationEngineUserBased.getRecommendations(userController.currentUserId, 30);
+                                // recommendationsVariant = recommendationEngineUserBased.getRecommendations(userController.currentUserId, 30);
 
-                                for (var i = 0; i < recommendationsVariant.length; i++) {
-                                    var recommendation = recommendationsVariant[i];
-                                    recommendationsArray.push({movieId: recommendation.movieID, url: recommendation.url, title: recommendation.title });
-                                }
+                                // for (var i = 0; i < recommendationsVariant.length; i++) {
+                                //     var recommendation = recommendationsVariant[i];
+                                //     recommendationsArray.push({movieId: recommendation.movieID, url: recommendation.url, title: recommendation.title });
+                                // }
 
-                                userBasedId.movies = recommendationsArray;
+                                // userBasedId.movies = recommendationsArray;
 
 
                             }

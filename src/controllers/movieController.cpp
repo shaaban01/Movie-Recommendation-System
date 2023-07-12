@@ -1,7 +1,7 @@
 #include "movieController.h"
 #include "movie.h"
 #include "db.h"
-#include "sstream"
+#include <sstream>
 
 size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::string *userp)
 {
@@ -134,8 +134,10 @@ bool MovieController::storeMovie(const std::string movieId)
 
     // Check if movie exists
     std::stringstream ss_check;
-    ss_check << "SELECT * FROM Movies WHERE Id = '" << movie.id << "'";
-    sql::ResultSet *result = DB::getInstance()->executeQuery(ss_check.str());
+    ss_check << "SELECT * FROM Movies WHERE Id = ?";
+    sql::PreparedStatement *checkStatement = DB::getInstance()->prepareStatement(ss_check.str());
+    checkStatement->setString(1, std::to_string(movie.id));
+    sql::ResultSet *result = checkStatement->executeQuery();
 
     if (!result->next())
     { // If movie does not exist, insert it
@@ -143,23 +145,41 @@ bool MovieController::storeMovie(const std::string movieId)
         std::stringstream ss_insert;
         ss_insert << "INSERT INTO Movies (Id, Title, original_title, original_language, Overview, release_date, "
                   << "Adult, Popularity, Video, vote_average, vote_count, backdrop_path, poster_path) "
-                  << "VALUES ('" << movie.id << "', '" << movie.title << "', '" << movie.original_title << "', '"
-                  << movie.original_language << "', '" << movie.overview << "', '" << movie.release_date << "', '"
-                  << (movie.adult ? 1 : 0) << "', '" << movie.popularity << "', '" << (movie.video ? 1 : 0) << "', '"
-                  << movie.vote_average << "', '" << movie.vote_count << "', '" << movie.backdrop_path << "', '"
-                  << movie.poster_path << "')";
+                  << "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        sql::PreparedStatement *insertStatement = DB::getInstance()->prepareStatement(ss_insert.str());
+        insertStatement->setString(1, std::to_string(movie.id));
+        insertStatement->setString(2, movie.title);
+        insertStatement->setString(3, movie.original_title);
+        insertStatement->setString(4, movie.original_language);
+        insertStatement->setString(5, movie.overview);
+        insertStatement->setString(6, movie.release_date);
+        insertStatement->setBoolean(7, movie.adult);
+        insertStatement->setDouble(8, movie.popularity);
+        insertStatement->setBoolean(9, movie.video);
+        insertStatement->setDouble(10, movie.vote_average);
+        insertStatement->setInt(11, movie.vote_count);
+        insertStatement->setString(12, movie.backdrop_path);
+        insertStatement->setString(13, movie.poster_path);
 
         // Execute SQL statement for Movies table.
-        int count = DB::getInstance()->executeUpdate(ss_insert.str());
+        int count = insertStatement->executeUpdate();
         if (count == 0)
         {
             std::cerr << "Failed to store movie data." << std::endl;
+            delete insertStatement;
+            delete checkStatement;
+            delete result;
             return false;
         }
+
+        delete insertStatement;
+        delete checkStatement;
 
         // Store the movie genres data.
         storeMovieGenres(movie.genre_ids, movie.id);
     }
+    delete checkStatement;
     delete result;
 
     return true;

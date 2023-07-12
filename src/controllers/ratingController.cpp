@@ -8,7 +8,10 @@ RatingController::RatingController()
 bool RatingController::createRating(int userID, std::string movieID, float rating)
 {
     if (!(movieController->storeMovie(movieID)))
+    {
         std::cout << "ERROR: Cannot Save movie " << movieID << std::endl;
+        return false;
+    }
 
     std::stringstream ss;
     ss << "INSERT INTO UserMovies(UserID, MovieID, UserRating) VALUES (" << userID << ", " << movieID << ", " << rating << ")";
@@ -18,23 +21,36 @@ bool RatingController::createRating(int userID, std::string movieID, float ratin
     {
         // Fetch the user and the movie from the database
         std::unique_ptr<User> user = userController->getUser(userID);
-        Movie *movie;
-        movieController->fetchMovieById(movieID, *movie);
-
-        // Update the user's genre preferences
-        for (int genre : movie->genre_ids)
+        Movie *movie = new Movie;
+        if (user != nullptr && movieController->fetchMovieById(movieID, *movie))
         {
-            user->genre_preferences[genre] += rating;
+            // Update the user's genre preferences
+            for (int genre : movie->genre_ids)
+            {
+                user->genre_preferences[genre] += rating;
+            }
+
+            // Update the user's language preferences
+            user->language_preferences[movie->original_language] += rating;
+
+            // Update the user in the database
+            userController->updateUser(user);
+        }
+        else
+        {
+            std::cout << "ERROR: Failed to fetch user or movie data." << std::endl;
+            delete movie;
+            return false;
         }
 
-        // Update the user's language preferences
-        user->language_preferences[movie->original_language] += rating;
-
-        // Update the user in the database
-        userController->updateUser(user);
+        delete movie;
+        return true;
     }
-
-    return count > 0;
+    else
+    {
+        std::cout << "ERROR: Cannot Save rating " << movieID << std::endl;
+        return false;
+    }
 }
 
 bool RatingController::updateRating(int userID, std::string movieID, float newRating)
@@ -135,4 +151,24 @@ std::map<int, float> RatingController::getAllRatings(int userID) const
     }
     delete res;
     return ratings;
+}
+
+bool RatingController::createRatingQML(int userID, const QString &movieID, float rating)
+{
+    return createRating(userID, movieID.toStdString(), rating);
+}
+
+bool RatingController::updateRatingQML(int userID, const QString &movieID, float newRating)
+{
+    return updateRating(userID, movieID.toStdString(), newRating);
+}
+
+bool RatingController::deleteRatingQML(int userID, const QString &movieID)
+{
+    return deleteRating(userID, movieID.toStdString());
+}
+
+float RatingController::getRatingQML(int userID, const QString &movieID) const
+{
+    return getRating(userID, movieID.toStdString());
 }
