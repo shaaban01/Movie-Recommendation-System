@@ -35,6 +35,7 @@ Item {
             model: root.movies
             flickableDirection: Flickable.HorizontalFlick
             delegate: Movie {
+                movieId: modelData.movieId
                 imageUrl: modelData.url
                 movieTitle: modelData.title
             }

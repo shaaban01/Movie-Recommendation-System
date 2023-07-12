@@ -13,8 +13,8 @@ using UserIdSimilarityPair = std::pair<int, float>;
 float UserBasedCollaborativeFiltering::computeSimilarity(const User &user1, const User &user2)
 {
     // Get the ratings of both users
-    const RatingsForUser& ratings1 = ratings[user1.getId()];
-    const RatingsForUser& ratings2 = ratings[user2.getId()];
+    const RatingsForUser &ratings1 = ratings[user1.getId()];
+    const RatingsForUser &ratings2 = ratings[user2.getId()];
 
     // Initialize variables for similarity calculation
     float dotProduct = 0.0, norm1 = 0.0, norm2 = 0.0;
@@ -45,13 +45,14 @@ std::vector<int> UserBasedCollaborativeFiltering::getSimilarUsers(const User &us
     // Calculate similarity for each user and store it in the vector
     for (const auto &kv : users)
     {
-        if (kv.first == user.getId()) continue;
+        if (kv.first == user.getId())
+            continue;
         similarities.push_back({kv.first, computeSimilarity(user, kv.second)});
     }
 
     // Sort the vector in descending order of similarity
     std::sort(similarities.begin(), similarities.end(),
-              [](const UserIdSimilarityPair& a, const UserIdSimilarityPair& b)
+              [](const UserIdSimilarityPair &a, const UserIdSimilarityPair &b)
               { return a.second > b.second; });
 
     // Extract the sorted user IDs
@@ -68,13 +69,13 @@ std::vector<int> UserBasedCollaborativeFiltering::getSimilarUsers(const User &us
 float UserBasedCollaborativeFiltering::predictRating(const User &user, const Movie &movie)
 {
     // Get the similar users
-    const std::vector<int>& similarUsers = getSimilarUsers(user);
+    const std::vector<int> &similarUsers = getSimilarUsers(user);
 
     // Initialize sum variables
     float weightedSum = 0.0, sumSimilarities = 0.0;
 
     // Compute weighted sum and sum of similarities
-    for (const int& userId : similarUsers)
+    for (const int &userId : similarUsers)
     {
         const float sim = computeSimilarity(user, users[userId]);
         weightedSum += sim * ratings[userId][movie.id];
@@ -99,7 +100,7 @@ std::vector<Movie> UserBasedCollaborativeFiltering::recommend(const User &user, 
 
     // Sort the vector in descending order of predicted rating
     std::sort(predictedRatings.begin(), predictedRatings.end(),
-              [](const UserIdSimilarityPair& a, const UserIdSimilarityPair& b)
+              [](const UserIdSimilarityPair &a, const UserIdSimilarityPair &b)
               { return a.second > b.second; });
 
     // Extract the top-rated movies
@@ -107,6 +108,12 @@ std::vector<Movie> UserBasedCollaborativeFiltering::recommend(const User &user, 
     for (int i = 0; i < num_recommendations && i < static_cast<int>(predictedRatings.size()); i++)
     {
         recommendations.push_back(movies[predictedRatings[i].first]);
+    }
+
+    std::cout << "User-based collaborative filtering recommendations for user:" << std::endl;
+    for (const Movie &movie : recommendations)
+    {
+        std::cout << movie.title << std::endl;
     }
 
     return recommendations;

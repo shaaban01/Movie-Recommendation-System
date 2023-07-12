@@ -70,8 +70,7 @@ bool UserController::registerUser(const std::string &username, const std::string
 bool UserController::loginUser(const std::string &username, const std::string &password)
 {
     std::cout << "Logging in...\n";
-    std::cout << "Username: " << username << "\n";
-    std::cout << "Password: " << password << "\n";
+
     std::stringstream query;
     query << "SELECT * FROM Users WHERE UserName='" << username << "' AND Password='" << password << "'";
 
@@ -82,7 +81,7 @@ bool UserController::loginUser(const std::string &username, const std::string &p
         std::cout << "Login successful!\n";
         authenticated = true;
 
-        currentUserId =  res->getInt("UserID");
+        currentUserId = res->getInt("UserID");
         return true;
     }
     else
@@ -116,4 +115,26 @@ bool UserController::registerUserQML(const QString &username, const QString &pas
 bool UserController::loginUserQML(const QString &username, const QString &password)
 {
     return loginUser(username.toStdString(), password.toStdString());
+}
+
+User UserController::getUserQML(int userId)
+{
+    return *getUser(userId);
+}
+
+std::map<int, User> UserController::getAllUsers()
+{
+    std::map<int, User> users;
+
+    std::stringstream query;
+    query << "SELECT * FROM Users";
+
+    sql::ResultSet *res = db->executeQuery(query.str());
+
+    while (res->next())
+    {
+        users[res->getInt("UserID")] = User(res->getInt("UserID"), res->getString("UserName"), res->getString("Password"), res->getInt("Age"));
+    }
+
+    return users;
 }

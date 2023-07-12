@@ -3,6 +3,9 @@
 
 #include <vector>
 #include <map>
+#include <QObject>
+#include <QVariant>
+#include <iostream>
 #include "movie.h"
 #include "user.h"
 #include "movieController.h"
@@ -35,8 +38,18 @@ private:
 
 public:
     // Constructor that initializes user collection, ratings, and movie collection.
-    UserBasedCollaborativeFiltering(std::map<int, User> &users, std::map<int, std::map<int, float>> &ratings, std::map<int, Movie> &movies)
-        : users(users), ratings(ratings), movies(movies) {}
+    UserBasedCollaborativeFiltering()
+    {
+        UserController userController;
+        MovieController movieController;
+        RatingController ratingController;
+        users = userController.getAllUsers();
+        movieController.getAllMovies(movies);
+        for (const auto &user : users)
+        {
+            ratings[user.first] = ratingController.getAllRatings(user.first);
+        }
+    }
 
     // Provide movie recommendations for the given user.
     std::vector<Movie> recommend(const User &user, int num_recommendations) override;
@@ -55,8 +68,13 @@ private:
 
 public:
     // Constructor that initializes user collection and movie collection.
-    ContentBasedFiltering(std::map<int, User> &users, std::map<int, Movie> &movies)
-        : users(users), movies(movies) {}
+    ContentBasedFiltering()
+    {
+        UserController userController;
+        MovieController movieController;
+        users = userController.getAllUsers();
+        movieController.getAllMovies(movies);
+    }
 
     // Provide movie recommendations for the given user.
     std::vector<Movie> recommend(const User &user, int num_recommendations) override;
@@ -66,20 +84,18 @@ public:
 class PopularityBasedStrategy : public RecommendationStrategy
 {
 private:
-    MovieController movieController;
+    MovieController movieController = MovieController();
     std::vector<Movie> recommend(int num_recommendations);
 
 public:
-    // Constructor that initializes the MovieController.
-    PopularityBasedStrategy(MovieController movieController) : movieController(movieController) {}
-
     // Provide movie recommendations for the given user.
     std::vector<Movie> recommend(const User &user, int num_recommendations) override;
 };
 
 // Recommendation engine that utilizes a recommendation strategy to provide movie recommendations.
-class RecommendationEngine
+class RecommendationEngine : public QObject
 {
+    Q_OBJECT
 private:
     RecommendationStrategy *strategy; // Pointer to the strategy being used.
 
@@ -94,6 +110,28 @@ public:
     std::vector<Movie> recommend(const User &user, int num_recommendations)
     {
         return strategy->recommend(user, num_recommendations);
+    }
+
+signals:
+    void recommendationReady(std::vector<Movie> recommendations);
+
+public slots:
+    Q_INVOKABLE QVariantList getRecommendations(int userId, int num_recommendations)
+    {
+        UserController userController;
+        User user = *userController.getUser(userId);
+        std::vector<Movie> recommendations = strategy->recommend(user, num_recommendations);
+        QVariantList variantList;
+        for (const Movie &movie : recommendations)
+        {
+            QVariantMap movieMap;
+            movieMap["movieID"] = QString::number(movie.id);
+            movieMap["url"] = QString::fromStdString(movie.poster_path);
+            movieMap["title"] = QString::fromStdString(movie.title);
+            variantList.append(movieMap);
+        }
+
+        return variantList;
     }
 };
 

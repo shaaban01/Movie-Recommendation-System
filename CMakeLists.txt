@@ -35,7 +35,7 @@ qt5_add_resources(QT_RESOURCES qml.qrc)
 
 # Run MOC on UserController class
 qt5_wrap_cpp(MOC_SOURCES
-    include/controllers/userController.h
+    include/controllers/userController.h include/engine.h include/models/user.h include/models/movie.h src/models/movie.cpp
 )
 
 add_executable(MovieRecommendatoinSystem ${SOURCES} ${QT_RESOURCES} ${MOC_SOURCES})

@@ -1,4 +1,5 @@
 #include "engine.h"
+#include <iostream>
 
 using GenrePreferences = std::map<int, float>;
 using LanguagePreferences = std::map<std::string, float>;
@@ -50,6 +51,12 @@ std::vector<Movie> ContentBasedFiltering::recommend(const User &user, int num_re
     for (int i = 0; i < num_recommendations && i < static_cast<int>(movieScores.size()); i++)
     {
         recommendations.push_back(movies[movieScores[i].first]);
+    }
+
+    std::cout << "Content-based filtering recommendations for user :" << std::endl;
+    for (const auto &movie : recommendations)
+    {
+        std::cout << movie.title << std::endl;
     }
 
     return recommendations;

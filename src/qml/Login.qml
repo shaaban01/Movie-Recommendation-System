@@ -32,9 +32,6 @@ Page {
             text: "Log In"
             width: 200
             onClicked: {
-                console.log("Logging in...")
-                console.log("Username: " + usernameField.text)
-                console.log("Password: " + passwordField.text)
                 if (userController.loginUserQML(usernameField.text, passwordField.text))
                 {
                     console.log("Login successful")

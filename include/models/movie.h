@@ -8,6 +8,7 @@
 
 class Movie
 {
+
 public:
     Movie();
     Movie(const nlohmann::json &movieJson);

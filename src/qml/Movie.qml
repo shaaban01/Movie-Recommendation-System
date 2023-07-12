@@ -1,8 +1,10 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
+import QtQuick.Layouts 1.12
 
 Item {
     id: root
+    property string movieId: ""
     property string imageUrl: ""
     property string movieTitle: ""
     readonly property string baseUrl: "https://image.tmdb.org/t/p/original/"
@@ -89,6 +91,33 @@ Item {
                     font.pixelSize: 24
                     wrapMode: Text.WordWrap
                 }
+                //temp
+                Label {
+                    id: idlabel
+                    text: root.movieId
+                    font.pixelSize: 24
+                    wrapMode: Text.WordWrap
+                }
+
+                RowLayout {
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    Layout.margins: 10
+                    Button {
+                        text: "watched"
+                        onClicked: {
+                        console.log("rate the movie")
+                        movieDetailPopup.close()
+                        }
+                    }
+                    Button {
+                        text: "want to watch"
+                        onClicked: {
+                        console.log("added to watch list")
+                        movieDetailPopup.close()
+                        }
+                    }
+                }
+
             }
         }
     }
