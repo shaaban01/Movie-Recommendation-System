@@ -22,7 +22,11 @@ float UserBasedCollaborativeFiltering::computeSimilarity(const User &user1, cons
     // Compute dot product and first norm
     for (const auto &kv : ratings1)
     {
-        dotProduct += kv.second * ratings2.at(kv.first);
+        const int movieId = kv.first;
+        if (ratings2.find(movieId) != ratings2.end()) // Check if movieId exists in ratings2
+        {
+            dotProduct += kv.second * ratings2.at(movieId);
+        }
         norm1 += kv.second * kv.second;
     }
 
@@ -78,12 +82,25 @@ float UserBasedCollaborativeFiltering::predictRating(const User &user, const Mov
     for (const int &userId : similarUsers)
     {
         const float sim = computeSimilarity(user, users[userId]);
-        weightedSum += sim * ratings[userId][movie.id];
-        sumSimilarities += sim;
+
+        // Check if the movie rating exists for the current user
+        if (ratings[userId].find(movie.id) != ratings[userId].end())
+        {
+            weightedSum += sim * ratings[userId].at(movie.id);
+            sumSimilarities += sim;
+        }
     }
 
     // Return predicted rating
-    return weightedSum / sumSimilarities;
+    if (sumSimilarities > 0)
+    {
+        return weightedSum / sumSimilarities;
+    }
+    else
+    {
+        // Handle the case when there are no similar users or no ratings for the movie
+        return 0.0; // You can choose an appropriate default value
+    }
 }
 
 // Recommends movies to the given user based on user-based collaborative filtering
@@ -107,7 +124,11 @@ std::vector<Movie> UserBasedCollaborativeFiltering::recommend(const User &user, 
     std::vector<Movie> recommendations;
     for (int i = 0; i < num_recommendations && i < static_cast<int>(predictedRatings.size()); i++)
     {
-        recommendations.push_back(movies[predictedRatings[i].first]);
+        // Check if the movie exists in the map
+        if (movies.count(predictedRatings[i].first))
+        {
+            recommendations.push_back(movies[predictedRatings[i].first]);
+        }
     }
 
     std::cout << "User-based collaborative filtering recommendations for user:" << std::endl;

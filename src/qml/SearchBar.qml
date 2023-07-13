@@ -7,4 +7,11 @@ TextField {
     height: parent.height
     placeholderText: "Search"
 
+    Keys.onReturnPressed: {
+        searchMovies(text)
+    }
+    onAccepted: {
+        searchMovies(text)
+    }
 }
+

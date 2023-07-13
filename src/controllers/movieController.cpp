@@ -2,6 +2,10 @@
 #include "movie.h"
 #include "db.h"
 #include <sstream>
+#include <algorithm>
+#include <cctype>
+#include <iomanip>
+#include <sstream>
 
 size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::string *userp)
 {
@@ -85,8 +89,9 @@ bool MovieController::fetchMovieById(const std::string MovieId, Movie &movie)
 
 bool MovieController::fetchMoviesByTitle(std::string movieName, std::vector<Movie> &movies)
 {
+    std::string encodedMovieName = urlEncode(movieName);
     std::string apiKey = std::getenv("API_KEY_TMDB"); // Fetch the API key from the environment variables
-    std::string url = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + movieName + "&language=en-US&page=1";
+    std::string url = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + encodedMovieName + "&language=en-US&page=1";
     return fetchMovies(url, movies);
 }
 
@@ -212,4 +217,40 @@ bool MovieController::getAllMovies(std::map<int, Movie> &movies)
     }
     delete result;
     return true;
+}
+
+QVariantList MovieController::fetchMoviesByTitleQML(const QString &movieName)
+{
+    std::vector<Movie> movies;
+    if (!fetchMoviesByTitle(movieName.toStdString(), movies))
+    {
+        return QVariantList();
+    }
+    QVariantList qMovies;
+    for (Movie &movie : movies)
+    {
+        QVariantMap movieMap;
+        movieMap["movieID"] = QString::number(movie.id);
+        movieMap["url"] = QString::fromStdString(movie.poster_path);
+        movieMap["title"] = QString::fromStdString(movie.title);
+        qMovies.append(movieMap);
+    }
+    return qMovies;
+}
+
+std::string MovieController::urlEncode(const std::string& str)
+{
+    std::ostringstream escaped;
+    escaped.fill('0');
+    escaped << std::hex;
+
+    for (char c : str) {
+        if (std::isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+            escaped << c;
+        } else {
+            escaped << '%' << std::setw(2) << std::int32_t(static_cast<unsigned char>(c));
+        }
+    }
+
+    return escaped.str();
 }

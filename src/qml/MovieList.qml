@@ -38,6 +38,7 @@ Item {
                 movieId: modelData.movieId
                 imageUrl: modelData.url
                 movieTitle: modelData.title
+                movieRating: modelData.rating
             }
             spacing: 10
         }

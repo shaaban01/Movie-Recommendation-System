@@ -84,7 +84,7 @@ public:
 class PopularityBasedStrategy : public RecommendationStrategy
 {
 private:
-    MovieController movieController = MovieController();
+    MovieController movieController;
     std::vector<Movie> recommend(int num_recommendations);
 
 public:
@@ -120,6 +120,7 @@ public slots:
     {
         UserController userController;
         User user = *userController.getUser(userId);
+        RatingController ratingController;
         std::vector<Movie> recommendations = strategy->recommend(user, num_recommendations);
         QVariantList variantList;
         for (const Movie &movie : recommendations)
@@ -128,6 +129,7 @@ public slots:
             movieMap["movieID"] = QString::number(movie.id);
             movieMap["url"] = QString::fromStdString(movie.poster_path);
             movieMap["title"] = QString::fromStdString(movie.title);
+            movieMap["rating"] = ratingController.getRating(userId,std::to_string(movie.id));   
             variantList.append(movieMap);
         }
 

@@ -23,8 +23,10 @@ Item {
             height: parent.height - listTitleLabel.height
             model: root.movies
             delegate: Movie {
+                movieId: modelData.movieId
                 imageUrl: modelData.url
                 movieTitle: modelData.title
+                movieRating: modelData.rating
             }
             cellWidth: 200
             cellHeight: 300

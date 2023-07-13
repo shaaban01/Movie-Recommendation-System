@@ -5,120 +5,90 @@ RatingController::RatingController()
     db = DB::getInstance();
 }
 
-bool RatingController::createRating(int userID, std::string movieID, float rating)
+bool RatingController::addRating(int userID, std::string movieID, float rating)
 {
-    if (!(movieController->storeMovie(movieID)))
-    {
-        std::cout << "ERROR: Cannot Save movie " << movieID << std::endl;
-        return false;
-    }
+    UserController userController;
 
-    std::stringstream ss;
-    ss << "INSERT INTO UserMovies(UserID, MovieID, UserRating) VALUES (" << userID << ", " << movieID << ", " << rating << ")";
-    int count = db->executeUpdate(ss.str());
-
-    if (count > 0)
+    // Check if the rating already exists
+    float oldRating = getRating(userID, movieID);
+    if (oldRating > 0)
     {
-        // Fetch the user and the movie from the database
-        std::unique_ptr<User> user = userController->getUser(userID);
-        Movie *movie = new Movie;
-        if (user != nullptr && movieController->fetchMovieById(movieID, *movie))
+        // Update the rating in the database
+        std::stringstream ss;
+        ss << "UPDATE UserMovies SET UserRating = " << rating << " WHERE UserID = " << userID << " AND MovieID = '" << movieID << "'";
+        int count = db->executeUpdate(ss.str());
+
+        if (count > 0)
         {
+            // Fetch the user and the movie from the database
+            std::unique_ptr<User> user = userController.getUser(userID);
+            Movie *movie;
+            movieController->fetchMovieById(movieID, *movie);
+
             // Update the user's genre preferences
             for (int genre : movie->genre_ids)
             {
+                user->genre_preferences[genre] -= oldRating;
                 user->genre_preferences[genre] += rating;
             }
 
             // Update the user's language preferences
+            user->language_preferences[movie->original_language] -= oldRating;
             user->language_preferences[movie->original_language] += rating;
 
             // Update the user in the database
-            userController->updateUser(user);
-        }
-        else
-        {
-            std::cout << "ERROR: Failed to fetch user or movie data." << std::endl;
-            delete movie;
-            return false;
+            userController.updateUser(user);
         }
 
-        delete movie;
-        return true;
+        return count > 0;
     }
     else
     {
-        std::cout << "ERROR: Cannot Save rating " << movieID << std::endl;
-        return false;
-    }
-}
-
-bool RatingController::updateRating(int userID, std::string movieID, float newRating)
-{
-    // Fetch the old rating from the database
-    float oldRating = getRating(userID, movieID);
-
-    // Update the rating in the database
-    std::stringstream ss;
-    ss << "UPDATE UserMovies SET UserRating = " << newRating << " WHERE UserID = " << userID << " AND MovieID = " << movieID;
-    int count = db->executeUpdate(ss.str());
-
-    if (count > 0)
-    {
-        // Fetch the user and the movie from the database
-        std::unique_ptr<User> user = userController->getUser(userID);
-        Movie *movie;
-        movieController->fetchMovieById(movieID, *movie);
-
-        // Update the user's genre preferences
-        for (int genre : movie->genre_ids)
+        // Create a new rating
+        if (!(movieController->storeMovie(movieID)))
         {
-            user->genre_preferences[genre] -= oldRating;
-            user->genre_preferences[genre] += newRating;
+            std::cout << "ERROR: Cannot Save movie " << movieID << std::endl;
+            return false;
         }
 
-        // Update the user's language preferences
-        user->language_preferences[movie->original_language] -= oldRating;
-        user->language_preferences[movie->original_language] += newRating;
-
-        // Update the user in the database
-        userController->updateUser(user);
-    }
-
-    return count > 0;
-}
-
-bool RatingController::deleteRating(int userID, std::string movieID)
-{
-    // Fetch the old rating from the database
-    float oldRating = getRating(userID, movieID);
-
-    // Delete the rating from the database
-    std::stringstream ss;
-    ss << "DELETE FROM UserMovies WHERE UserID = " << userID << " AND MovieID = " << movieID;
-    int count = db->executeUpdate(ss.str());
-
-    if (count > 0)
-    {
-        // Fetch the user and the movie from the database
-        std::unique_ptr<User> user = userController->getUser(userID);
-        Movie *movie;
-        movieController->fetchMovieById(movieID, *movie);
-
-        // Update the user's genre preferences
-        for (int genre : movie->genre_ids)
+        std::stringstream ss;
+        ss << "INSERT INTO UserMovies(UserID, MovieID, UserRating) VALUES (" << userID << ", '" << movieID << "', " << rating << ")";
+        int count = db->executeUpdate(ss.str());
+        if (count > 0)
         {
-            user->genre_preferences[genre] -= oldRating;
+            // Fetch the user and the movie from the database
+            std::unique_ptr<User> user = userController.getUser(userID);
+            Movie *movie = new Movie;
+            if (user != nullptr && movieController->fetchMovieById(movieID, *movie))
+            {
+                // Update the user's genre preferences
+                for (int genre : movie->genre_ids)
+                {
+                    user->genre_preferences[genre] += rating;
+                }
+
+                // Update the user's language preferences
+                user->language_preferences[movie->original_language] += rating;
+
+                // Update the user in the database
+                userController.updateUser(user);
+            }
+            else
+            {
+                std::cout << "ERROR: Failed to fetch user or movie data." << std::endl;
+                delete movie;
+                return false;
+            }
+
+            delete movie;
+            return true;
         }
-
-        // Update the user's language preferences
-        user->language_preferences[movie->original_language] -= oldRating;
-
-        // Update the user in the database
-        userController->updateUser(user);
+        else
+        {
+            std::cout << "ERROR: Cannot Save rating " << movieID << std::endl;
+            return false;
+        }
     }
-
-    return count > 0;
 }
 
 float RatingController::getRating(int userID, std::string movieID) const
@@ -153,22 +123,32 @@ std::map<int, float> RatingController::getAllRatings(int userID) const
     return ratings;
 }
 
-bool RatingController::createRatingQML(int userID, const QString &movieID, float rating)
+bool RatingController::addRatingQML(int userID, const QString &movieID, float rating)
 {
-    return createRating(userID, movieID.toStdString(), rating);
-}
-
-bool RatingController::updateRatingQML(int userID, const QString &movieID, float newRating)
-{
-    return updateRating(userID, movieID.toStdString(), newRating);
-}
-
-bool RatingController::deleteRatingQML(int userID, const QString &movieID)
-{
-    return deleteRating(userID, movieID.toStdString());
+    return addRating(userID, movieID.toStdString(), rating);
 }
 
 float RatingController::getRatingQML(int userID, const QString &movieID) const
 {
     return getRating(userID, movieID.toStdString());
+}
+
+QVariantList RatingController::getAllRatingsQML(int userID) const
+{
+    std::map<int, float> ratings = getAllRatings(userID);
+    QVariantList variantList;
+    MovieController *movieController;
+    Movie movie;
+    for (auto const &rating : ratings)
+    {
+        movieController->fetchMovieById(std::to_string(rating.first), movie);
+        QVariantMap movieMap;
+        movieMap["movieID"] = QString::number(movie.id);
+        movieMap["url"] = QString::fromStdString(movie.poster_path);
+        movieMap["title"] = QString::fromStdString(movie.title);
+        movieMap["rating"] = ratings[movie.id];
+        variantList.append(movieMap);
+    }
+
+    return variantList;
 }

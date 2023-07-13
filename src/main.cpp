@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     UserController userController;
+    MovieController movieController;
     PopularityBasedStrategy strategyPopular;
     RecommendationEngine recommendationEnginePopularity(&strategyPopular);
     ContentBasedFiltering strategyContentBased;
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("recommendationEngineUserBased", &recommendationEngineUserBased);
     engine.rootContext()->setContextProperty("userController", &userController);
     engine.rootContext()->setContextProperty("ratingController", &ratingController);
+    engine.rootContext()->setContextProperty("movieController", &movieController);
 
     engine.load(QUrl(QStringLiteral("qrc:/src/qml/main.qml")));
     if (engine.rootObjects().isEmpty())

@@ -6,6 +6,7 @@
 #include <sstream>
 #include <memory>
 #include <QObject>
+#include <QVariant>
 
 #include "db.h"
 #include "movieController.h"
@@ -26,14 +27,9 @@ private:
 public:
     RatingController();
 
-    // Create a new rating.
-    bool createRating(int userID, std::string movieID, float rating);
-
-    // Update an existing rating.
-    bool updateRating(int userID, std::string movieID, float newRating);
-
-    // Delete a rating.
-    bool deleteRating(int userID, std::string movieID);
+    // Create a new rating for a movie by a user.
+    // If the rating already exists, it will be updated.
+    bool addRating(int userID, std::string movieID, float rating);
 
     // Get a rating.
     float getRating(int userID, std::string movieID) const;
@@ -42,10 +38,9 @@ public:
     std::map<int, float> getAllRatings(int userID) const;
 
 public slots:
-    Q_INVOKABLE bool createRatingQML(int userID, const QString &movieID, float rating);
-    Q_INVOKABLE bool updateRatingQML(int userID, const QString &movieID, float newRating);
-    Q_INVOKABLE bool deleteRatingQML(int userID, const QString &movieID);
+    Q_INVOKABLE bool addRatingQML(int userID, const QString &movieID, float rating);
     Q_INVOKABLE float getRatingQML(int userID, const QString &movieID) const;
+    Q_INVOKABLE QVariantList getAllRatingsQML(int userID) const;
 };
 
 #endif // RATING_CONTROLLER_H

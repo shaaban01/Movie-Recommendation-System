@@ -6,12 +6,15 @@
 #include <vector>
 #include <map>
 #include <curl/curl.h>
+#include <QObject>
+#include <QVariant>
+
 #include "nlohmann/json.hpp"
 #include "movie.h"
 
-class MovieController
+class MovieController : public QObject
 {
-
+    Q_OBJECT
 public:
     // Fetches movie data from the TMDB API and stores the data in the provided vector of Movies.
     // Returns true if the fetch was successful, false otherwise.
@@ -33,5 +36,10 @@ public:
     // Returns true if the retrieve was successful, false otherwise.
     bool getAllMovies(std::map<int, Movie> &movies);
 
+    // encode the url
+    std::string urlEncode(const std::string& str);
+
+public slots:
+    Q_INVOKABLE QVariantList fetchMoviesByTitleQML(const QString &movieName);
 };
 #endif /* MOVIE_FETCH_H */

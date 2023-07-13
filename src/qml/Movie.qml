@@ -7,6 +7,8 @@ Item {
     property string movieId: ""
     property string imageUrl: ""
     property string movieTitle: ""
+    property int movieRating: 0
+
     readonly property string baseUrl: "https://image.tmdb.org/t/p/original/"
 
     width: 200
@@ -32,6 +34,12 @@ Item {
         anchors.top: movieImage.bottom
         font.pixelSize: 16
         color: "#D4ADFC"
+    }
+    Text {
+        visible: root.movieRating !== 0
+        text: root.movieRating
+        width: parent.width
+        color: "red"
     }
 
     BusyIndicator {
@@ -92,16 +100,62 @@ Item {
                     wrapMode: Text.WordWrap
                 }
 
+                Label {
+                    id: detailRating
+                    text: movieRating
+                    font.pixelSize: 24
+                    wrapMode: Text.WordWrap
+                }
+
+                RowLayout {
+                    id: ratingRow
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    Layout.margins: 10
+
+                    Repeater {
+                        model: 5
+
+                        Rectangle {
+                        width: 40
+                        height: 40
+                        radius: width / 2
+                        border.width: 1
+                        border.color: "black"
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: index + 1
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                            root.movieRating = index + 1
+                            }
+                        }
+                        }
+                    }
+
+                    Text {
+                        text: root.movieRating > 0 ? root.movieRating : "Rate"
+                    }
+
+                }
+
+
 
                 RowLayout {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.margins: 10
                     Button {
-                        text: "watched"
+                        id: rateButton
+                        text: "submit rating"
                         onClicked: {
                             console.log("rate the movie")
-                            ratingController.createRatingQML(userController.currentUserId, root.movieId, 5)
+                            ratingController.addRatingQML(userController.currentUserId, root.movieId, root.movieRating)
                             movieDetailPopup.close()
+                            console.log("rating" + root.movieRating)
+                            updateMovies();
                         }
                     }
                     Button {
@@ -109,6 +163,7 @@ Item {
                         onClicked: {
                         console.log("added to watch list")
                         movieDetailPopup.close()
+                        updateMovies();
                         }
                     }
                 }
