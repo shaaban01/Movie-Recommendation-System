@@ -49,3 +49,6 @@ target_link_libraries(MovieRecommendatoinSystem
     ${CURL_LIBRARIES} 
     nlohmann_json::nlohmann_json
 )
+
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
