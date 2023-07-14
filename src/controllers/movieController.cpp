@@ -129,65 +129,65 @@ bool storeMovieGenres(std::vector<int> &genres, int movieId)
 
 bool MovieController::storeMovie(const std::string movieId)
 {
-    // Fetch the movie data.
-    Movie movie;
-    if (!fetchMovieById(movieId, movie))
+    try
     {
-        std::cerr << "Failed to fetch movie data." << std::endl;
-        return false;
-    }
-
-    // Check if movie exists
-    std::stringstream ss_check;
-    ss_check << "SELECT * FROM Movies WHERE Id = ?";
-    sql::PreparedStatement *checkStatement = DB::getInstance()->prepareStatement(ss_check.str());
-    checkStatement->setString(1, std::to_string(movie.id));
-    sql::ResultSet *result = checkStatement->executeQuery();
-
-    if (!result->next())
-    { // If movie does not exist, insert it
-        // Prepare SQL statement for Movies table.
-        std::stringstream ss_insert;
-        ss_insert << "INSERT INTO Movies (Id, Title, original_title, original_language, Overview, release_date, "
-                  << "Adult, Popularity, Video, vote_average, vote_count, backdrop_path, poster_path) "
-                  << "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        sql::PreparedStatement *insertStatement = DB::getInstance()->prepareStatement(ss_insert.str());
-        insertStatement->setString(1, std::to_string(movie.id));
-        insertStatement->setString(2, movie.title);
-        insertStatement->setString(3, movie.original_title);
-        insertStatement->setString(4, movie.original_language);
-        insertStatement->setString(5, movie.overview);
-        insertStatement->setString(6, movie.release_date);
-        insertStatement->setBoolean(7, movie.adult);
-        insertStatement->setDouble(8, movie.popularity);
-        insertStatement->setBoolean(9, movie.video);
-        insertStatement->setDouble(10, movie.vote_average);
-        insertStatement->setInt(11, movie.vote_count);
-        insertStatement->setString(12, movie.backdrop_path);
-        insertStatement->setString(13, movie.poster_path);
-
-        // Execute SQL statement for Movies table.
-        int count = insertStatement->executeUpdate();
-        if (count == 0)
+        // Fetch the movie data.
+        Movie movie;
+        if (!fetchMovieById(movieId, movie))
         {
-            std::cerr << "Failed to store movie data." << std::endl;
-            delete insertStatement;
-            delete checkStatement;
-            delete result;
+            std::cerr << "Failed to fetch movie data." << std::endl;
             return false;
         }
 
-        delete insertStatement;
-        delete checkStatement;
+        // Check if movie exists
+        std::stringstream ss_check;
+        ss_check << "SELECT * FROM Movies WHERE Id = ?";
+        std::unique_ptr<sql::PreparedStatement> checkStatement(DB::getInstance()->prepareStatement(ss_check.str()));
+        checkStatement->setString(1, std::to_string(movie.id));
+        std::unique_ptr<sql::ResultSet> result(checkStatement->executeQuery());
 
-        // Store the movie genres data.
-        storeMovieGenres(movie.genre_ids, movie.id);
+        if (!result->next())
+        { // If movie does not exist, insert it
+            // Prepare SQL statement for Movies table.
+            std::stringstream ss_insert;
+            ss_insert << "INSERT INTO Movies (Id, Title, original_title, original_language, Overview, release_date, "
+                      << "Adult, Popularity, Video, vote_average, vote_count, backdrop_path, poster_path) "
+                      << "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            std::unique_ptr<sql::PreparedStatement> insertStatement(DB::getInstance()->prepareStatement(ss_insert.str()));
+            insertStatement->setString(1, std::to_string(movie.id));
+            insertStatement->setString(2, movie.title);
+            insertStatement->setString(3, movie.original_title);
+            insertStatement->setString(4, movie.original_language);
+            insertStatement->setString(5, movie.overview);
+            insertStatement->setString(6, movie.release_date);
+            insertStatement->setBoolean(7, movie.adult);
+            insertStatement->setDouble(8, movie.popularity);
+            insertStatement->setBoolean(9, movie.video);
+            insertStatement->setDouble(10, movie.vote_average);
+            insertStatement->setInt(11, movie.vote_count);
+            insertStatement->setString(12, movie.backdrop_path);
+            insertStatement->setString(13, movie.poster_path);
+
+            // Execute SQL statement for Movies table.
+            int count = insertStatement->executeUpdate();
+            if (count == 0)
+            {
+                std::cerr << "Failed to store movie data." << std::endl;
+                return false;
+            }
+
+            // Store the movie genres data.
+            storeMovieGenres(movie.genre_ids, movie.id);
+        }
+
+        return true;
     }
-    delete checkStatement;
-    delete result;
-
-    return true;
+    catch (const std::exception &e)
+    {
+        std::cerr << "Exception occurred while storing movie: " << e.what() << std::endl;
+        return false;
+    }
 }
 
 bool MovieController::getAllMovies(std::map<int, Movie> &movies)
@@ -238,16 +238,20 @@ QVariantList MovieController::fetchMoviesByTitleQML(const QString &movieName)
     return qMovies;
 }
 
-std::string MovieController::urlEncode(const std::string& str)
+std::string MovieController::urlEncode(const std::string &str)
 {
     std::ostringstream escaped;
     escaped.fill('0');
     escaped << std::hex;
 
-    for (char c : str) {
-        if (std::isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+    for (char c : str)
+    {
+        if (std::isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~')
+        {
             escaped << c;
-        } else {
+        }
+        else
+        {
             escaped << '%' << std::setw(2) << std::int32_t(static_cast<unsigned char>(c));
         }
     }
