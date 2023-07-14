@@ -16,14 +16,14 @@ float ContentBasedFiltering::calculateSimilarity(const User &user, const Movie &
     {
         if (user.genre_preferences.find(genre) != user.genre_preferences.end())
         {
-            similarityScore += user.genre_preferences.at(genre);
+            similarityScore += user.genre_preferences.at(genre) * 0.5;
         }
     }
 
     // Calculate the score for language
     if (user.language_preferences.find(movie.original_language) != user.language_preferences.end())
     {
-        similarityScore += user.language_preferences.at(movie.original_language);
+        similarityScore += user.language_preferences.at(movie.original_language) * 0.5;
     }
 
     return similarityScore;
@@ -53,11 +53,7 @@ std::vector<Movie> ContentBasedFiltering::recommend(const User &user, int num_re
         recommendations.push_back(movies[movieScores[i].first]);
     }
 
-    std::cout << "Content-based filtering recommendations for user :" << std::endl;
-    for (const auto &movie : recommendations)
-    {
-        std::cout << movie.title << std::endl;
-    }
-
+    std::cout << "Content-based filtering recommendations for user "
+              << ":\n";
     return recommendations;
 }

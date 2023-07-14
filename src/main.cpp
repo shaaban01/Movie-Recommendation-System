@@ -16,20 +16,23 @@ int main(int argc, char *argv[])
 
     UserController userController;
     MovieController movieController;
-    PopularityBasedStrategy strategyPopular;
-    RecommendationEngine recommendationEnginePopularity(&strategyPopular);
-    ContentBasedFiltering strategyContentBased;
-    RecommendationEngine recommendationEngineContentBased(&strategyContentBased);
-    UserBasedCollaborativeFiltering strategyUserBased;
-    RecommendationEngine recommendationEngineUserBased(&strategyUserBased);
     RatingController ratingController;
 
-    engine.rootContext()->setContextProperty("recommendationEnginePopularity", &recommendationEnginePopularity);
-    engine.rootContext()->setContextProperty("recommendationEngineContentBased", &recommendationEngineContentBased);
-    engine.rootContext()->setContextProperty("recommendationEngineUserBased", &recommendationEngineUserBased);
+    PopularityBasedStrategy strategyPopular;
+    ContentBasedFiltering strategyContentBased;
+    // UserBasedCollaborativeFiltering strategyUserBased;
+
     engine.rootContext()->setContextProperty("userController", &userController);
     engine.rootContext()->setContextProperty("ratingController", &ratingController);
     engine.rootContext()->setContextProperty("movieController", &movieController);
+
+    RecommendationEngine recommendationEnginePopularity(&strategyPopular);
+    RecommendationEngine recommendationEngineContentBased(&strategyContentBased);
+    // RecommendationEngine recommendationEngineUserBased(&strategyUserBased);
+
+    engine.rootContext()->setContextProperty("recommendationEnginePopularity", &recommendationEnginePopularity);
+    engine.rootContext()->setContextProperty("recommendationEngineContentBased", &recommendationEngineContentBased);
+    // engine.rootContext()->setContextProperty("recommendationEngineUserBased", &recommendationEngineUserBased);
 
     engine.load(QUrl(QStringLiteral("qrc:/src/qml/main.qml")));
     if (engine.rootObjects().isEmpty())

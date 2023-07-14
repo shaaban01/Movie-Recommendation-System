@@ -131,11 +131,6 @@ std::vector<Movie> UserBasedCollaborativeFiltering::recommend(const User &user, 
         }
     }
 
-    std::cout << "User-based collaborative filtering recommendations for user:" << std::endl;
-    for (const Movie &movie : recommendations)
-    {
-        std::cout << movie.title << std::endl;
-    }
 
     return recommendations;
 }

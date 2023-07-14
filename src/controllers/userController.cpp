@@ -46,7 +46,6 @@ bool UserController::updateUser(std::unique_ptr<User> &user)
 {
     std::stringstream query;
     query << "UPDATE Users SET UserName='" << user->getUsername() << "', Password='" << user->getPassword() << "', Age=" << user->getAge() << " WHERE UserID=" << user->getId();
-    std::cout << "triggered "<< std::endl;
     int rowsAffected = db->executeUpdate(query.str());
 
     // Update genre preferences

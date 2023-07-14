@@ -18,19 +18,21 @@ Window {
             function updateMovies()
             {
                 var recommendationsArray = [];
-                var recommendationsVariant = recommendationEnginePopularity.getRecommendations(userController.currentUserId, 30);
+                var recommendationsVariant = recommendationEnginePopularity.getRecommendations(userController.currentUserId, 10);
 
                 for (var i = 0; i < recommendationsVariant.length; i++) {
                     var recommendation = recommendationsVariant[i];
                     recommendationsArray.push({movieId: recommendation.movieID, url: recommendation.url, title: recommendation.title, rating: recommendation.rating });
                 }
 
+
+
                 // Set the parsed array as the movies property
                 trendingId.movies = recommendationsArray;
 
                 recommendationsArray = [];
-                recommendationsVariant = recommendationEngineContentBased.getRecommendations(userController.currentUserId, 30);
-                console.log(recommendationsArray.toString());
+                var recommendationsVariant = recommendationEngineContentBased.getRecommendations(userController.currentUserId, 10);
+                // console.log(recommendationsArray.toString());
 
                 for (var i = 0; i < recommendationsVariant.length; i++) {
                     var recommendation = recommendationsVariant[i];
@@ -38,15 +40,15 @@ Window {
                 }
                 contentBasedId.movies = recommendationsArray;
 
-                recommendationsArray = [];
-                recommendationsVariant = recommendationEngineUserBased.getRecommendations(userController.currentUserId, 30);
+                // recommendationsArray = [];
+                // recommendationsVariant = recommendationEngineUserBased.getRecommendations(userController.currentUserId, 5);
 
-                for (var i = 0; i < recommendationsVariant.length; i++) {
-                    var recommendation = recommendationsVariant[i];
-                    recommendationsArray.push({movieId: recommendation.movieID, url: recommendation.url, title: recommendation.title, rating: recommendation.rating });
-                }
+                // for (var i = 0; i < recommendationsVariant.length; i++) {
+                //     var recommendation = recommendationsVariant[i];
+                //     recommendationsArray.push({movieId: recommendation.movieID, url: recommendation.url, title: recommendation.title, rating: recommendation.rating });
+                // }
 
-                userBasedId.movies = recommendationsArray;
+                // userBasedId.movies = recommendationsArray;
 
                 var ratingsArray = [];
                 var ratingsVariant = ratingController.getAllRatingsQML(userController.currentUserId);
