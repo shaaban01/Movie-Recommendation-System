@@ -46,8 +46,28 @@ bool UserController::updateUser(std::unique_ptr<User> &user)
 {
     std::stringstream query;
     query << "UPDATE Users SET UserName='" << user->getUsername() << "', Password='" << user->getPassword() << "', Age=" << user->getAge() << " WHERE UserID=" << user->getId();
-
+    std::cout << "triggered "<< std::endl;
     int rowsAffected = db->executeUpdate(query.str());
+
+    // Update genre preferences
+    for (const auto &genrePref : user->genre_preferences)
+    {
+        std::stringstream genreQuery;
+        genreQuery << "INSERT INTO UserGenrePreferences (UserID, GenreID, PreferenceScore) VALUES (" << user->getId() << ", " << genrePref.first << ", " << genrePref.second << ") ";
+        genreQuery << "ON DUPLICATE KEY UPDATE PreferenceScore=" << genrePref.second;
+
+        db->executeUpdate(genreQuery.str());
+    }
+
+    // Update language preferences
+    for (const auto &langPref : user->language_preferences)
+    {
+        std::stringstream langQuery;
+        langQuery << "INSERT INTO UserLanguagePreferences (UserID, Language, PreferenceScore) VALUES (" << user->getId() << ", '" << langPref.first << "', " << langPref.second << ") ";
+        langQuery << "ON DUPLICATE KEY UPDATE PreferenceScore=" << langPref.second;
+
+        db->executeUpdate(langQuery.str());
+    }
 
     return rowsAffected > 0;
 }
